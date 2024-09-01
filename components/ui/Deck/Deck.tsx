@@ -115,7 +115,11 @@ const Deck: React.FC<DeckProps> = ({
     };
 
     return (
-        <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between h-full hover:shadow-xl transition-shadow duration-300 relative">
+        <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between h-full hover:shadow-xl transition-shadow duration-300 relative"
+            style={{
+                backgroundColor: "#f9f3e6",
+            }}
+        >
             <div className="absolute top-2 right-2 flex items-center space-x-2">
                 <Button onClick={handleLikeClick} variant="ghost" size="icon">
                     <Star className={`h-4 w-4 ${liked ? 'text-yellow-400 fill-current' : 'text-gray-400'}`} />
@@ -169,6 +173,9 @@ const Deck: React.FC<DeckProps> = ({
                         value={deckName}
                         onChange={(e) => setDeckName(e.target.value)}
                         className="text-lg font-semibold text-gray-800 truncate w-full border-b-2 focus:outline-none"
+                        style={{
+                            backgroundColor: "#f2f2f2",
+                        }}
                     />
                 ) : (
                     <h3 className="text-lg font-semibold text-gray-800 truncate">{truncateTitle(deckName)}</h3>
@@ -178,6 +185,9 @@ const Deck: React.FC<DeckProps> = ({
                         value={deckDescription}
                         onChange={(e) => setDeckDescription(e.target.value)}
                         className="text-lg font-semibold text-gray-800 truncate w-full border-b-2 focus:outline-none"
+                        style={{
+                            backgroundColor: "#f2f2f2",
+                        }}
                         rows={2}
                     />
                     ):( description ? (

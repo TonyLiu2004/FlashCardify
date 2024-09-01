@@ -77,6 +77,7 @@ const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdi
         </div>
         
         <CardActionArea
+            disableRipple
             onClick={() => {
               if(!isEditing) handleCardClick();
             }}
@@ -84,30 +85,31 @@ const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdi
                 '&:focus': {
                     outline: 'none',  // Disable the default focus outline
                     boxShadow: 'none', // Disable the focus ring
-                }
+                },
+                background: 'none',
+                transition: 'transform 0.2s ease',
+                '&:hover': {
+                    transform: 'scale(1.04)', // Scale up the card on hover
+                },
             }}
         >
             <CardContent
                 sx={{
-                    border: `2px solid ${activeIndex ? '#d63f8e' : 'white'}`,
-                    boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', // Matching box shadow
                     borderRadius: '8px',
-                    transition: 'border-color 0.3s', // Smooth transition for border color change
-                    '&:focus': {
-                        outline: 'none',  // Disable the focus outline on CardContent
-                        boxShadow: 'none', // Disable the focus ring on CardContent
-                    }
+                    padding: 0,
                 }}
             >
                 <Box sx={{
                     perspective: "1000px",
                     '& > div': {
-                        transition: 'transform 0.6s',
+                        transition: 'transform 0.3s',
                         transformStyle: 'preserve-3d',
                         position: 'relative',
                         width: "100%",
                         height: "200px",
-                        transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                        borderRadius:"8px",
+                        transform: flipped ? 'rotateX(180deg)' : 'rotateX(0deg)',
+                        background: flipped ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
                     },
                     '& > div > div': {
                         position: 'absolute',
@@ -120,9 +122,11 @@ const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdi
                         padding: 2,
                         boxSizing: 'border-box',
                         overflow: 'auto',
+                        borderRadius:"8px",
+                        background: flipped ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
                     },
                     '& > div > div:nth-of-type(2)': {
-                        transform: 'rotateY(180deg)',
+                        transform: 'rotateX(180deg)',
                     }
                 }}>
                     <div>
@@ -133,7 +137,7 @@ const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdi
                                     value={cardFront}
                                     onChange={(e) => setCardFront(e.target.value)}
                                     style={{
-                                      backgroundColor:"black",
+                                      background: "linear-gradient(180deg, #718e4d, #3a6b8a)",
                                       color:"white",
                                       border:"none",
                                       fontSize: '20px',
@@ -151,13 +155,13 @@ const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdi
                             </Typography>
                         </div>
                         <div>
-                            <Typography variant="h5" component="div" sx={{ fontSize: '18px', width: '100%', display: 'flex', justifyContent: 'center'  }}>
+                            <Typography variant="h5" component="div" sx={{ fontSize: '22px', width: '100%', display: 'flex', justifyContent: 'center'  }}>
                             {isEditing ? (
                                   <textarea 
                                     value={cardBack}
                                     onChange={(e) => setCardBack(e.target.value)}
                                     style={{
-                                      backgroundColor:"black",
+                                      background: "linear-gradient(180deg, #3a6b8a, #718e4d)",
                                       color:"white",
                                       border:"none",
                                       fontSize: '20px',

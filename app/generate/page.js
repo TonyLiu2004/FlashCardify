@@ -223,6 +223,9 @@ export default function Generate() {
         return flashcards.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
                 <CardActionArea
+                    disableRipple
+                    disableTouchRipple
+                    disableFocusRipple 
                     onClick={() => {
                         if (saveMode) {
                             handleSelectCard(index);
@@ -231,27 +234,30 @@ export default function Generate() {
                         }
                     }}
                     sx={{
-                        backgroundColor: `${toSave[index] ? '#718e4d' : '#3a6b8a'}`,
-                        transition: 'border-color 0.3s ease',
+                        background: 'none',
+                        transition: 'transform 0.2s ease',
+                        '&:hover': {
+                            transform: 'scale(1.04)', // Scale up the card on hover
+                        },
                     }}
                 >
                     <CardContent
                         sx={{
-                            border: `2px solid ${activeIndex === index ? '#d63f8e' : 'white'}`,
-                            boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
                             borderRadius: '8px',
-                            transition: 'border-color 0.3s',
+                            padding: 0,
                         }}
                     >
                         <Box sx={{
                             perspective: "1000px",
                             '& > div': {
-                                transition: 'transform 0.6s',
+                                transition: 'transform 0.3s',
                                 transformStyle: 'preserve-3d',
                                 position: 'relative',
                                 width: "100%",
                                 height: "200px",
-                                transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                                borderRadius:"8px",
+                                transform: flipped[index] ? 'rotateX(180deg)' : 'rotateX(0deg)',
+                                background: flipped[index] ? "linear-gradient(180deg, #3a6b8a, #718e4d)" : 'linear-gradient(180deg, #718e4d, #3a6b8a)',
                             },
                             '& > div > div': {
                                 position: 'absolute',
@@ -264,19 +270,24 @@ export default function Generate() {
                                 padding: 2,
                                 boxSizing: 'border-box',
                                 overflow: 'auto',
+                                borderRadius:"8px",
+                                background: flipped[index] ? "linear-gradient(180deg, #3a6b8a, #718e4d)" : 'linear-gradient(180deg, #718e4d, #3a6b8a)',
                             },
                             '& > div > div:nth-of-type(2)': {
-                                transform: 'rotateY(180deg)',
+                                transform: 'rotateX(180deg)',
                             }
                         }}>
-                            <div>
+                            <div style={{
+                                // border: `${toSave[index] ? '#718e4d' : '#3a6b8a'}`,
+                                border: `${toSave[index] ? '3px solid #FFA500' : 'none'}`,
+                            }}>
                                 <div>
-                                    <Typography variant="h5" component="div">
+                                    <Typography variant="h5" component="div" sx={{ fontSize: '22px' }}>
                                         {flashcard.front}
                                     </Typography>
                                 </div>
                                 <div>
-                                    <Typography variant="h5" component="div" sx={{ fontSize: '18px' }}>
+                                    <Typography variant="h5" component="div" sx={{ fontSize: '22px' }}>
                                         {flashcard.back}
                                     </Typography>
                                 </div>
@@ -290,16 +301,24 @@ export default function Generate() {
 
     return (
         <div>
-            <Container maxWidth="md">
+            <Container>
                 <Box sx={{
                     mt: 4,
-                    mb: 6,
+                    mb: 1,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
+                    width:"100%",
                 }}>
-                    <Typography variant="h4">AI Generated Flashcards</Typography>
-                    <Paper sx={{ p: 4, width: "100%", marginTop: 4 }}>
+                    <Typography variant="h4">Generate Flashcards</Typography>
+                    <Paper sx={{ 
+                        p: 4, 
+                        width: "100%", 
+                        marginTop: 4, 
+                        borderRadius:"16px",
+                        boxShadow: '4px 8px 16px rgba(255, 255, 255, 0.4)',
+                        backgroundColor: "#f9f3e6",
+                    }}>
                         <TextField
                             value={text}
                             onChange={(e) => setText(e.target.value)}
@@ -313,16 +332,24 @@ export default function Generate() {
                                 '& .MuiOutlinedInput-root': {
                                     '& fieldset': {
                                         borderColor: 'black',
+                                        borderRadius:"16px",
+
                                     },
                                     '&:hover fieldset': {
                                         borderColor: 'black',
+                                        borderRadius:"16px",
+
                                     },
                                     '&.Mui-focused fieldset': {
                                         borderColor: 'black',
+                                        borderRadius:"16px",
+
                                     },
                                 },
                                 '& .MuiInputLabel-root': {
                                     color: 'black',
+                                    borderRadius:"16px",
+
                                 },
                             }}
                             InputLabelProps={{
@@ -334,24 +361,23 @@ export default function Generate() {
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: 'black',
+                                display: 'block', 
+                                width:"15vw",
+                                minWidth:"130px",
+                                margin:"0 auto",
+                                backgroundColor: '#45a049',
+                                padding: '8px 16px',
+                                borderRadius: '12px',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
                                 color: 'white',
                                 border: '2px solid transparent',
+                                transition: 'all 0.3s ease',
                                 position: 'relative',
                                 '&:hover': {
-                                    backgroundColor: 'black',
-                                    borderColor: 'transparent',
-                                    '&::after': {
-                                        content: '""',
-                                        position: 'absolute',
-                                        top: -2,
-                                        left: -2,
-                                        right: -2,
-                                        bottom: -2,
-                                        borderRadius: 'inherit',
-                                        border: '2px solid #EC4899',
-                                        pointerEvents: 'none',
-                                    },
+                                    backgroundColor: '#388E3C',
+                                    transform: 'scale(1.03)',
                                 },
                             }}
                             onClick={handleSubmit}
@@ -364,76 +390,92 @@ export default function Generate() {
                 </Box>
 
                 <Box ref={flashcardsPreviewRef} sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                    <Typography variant="h5">Flashcards Preview</Typography>
-                    <Box sx={{ width: '50%', margin: '0 auto' }}>
-                        <Divider sx={{ backgroundColor: 'white', height: '2px', marginBottom: 5 }} />
-                    </Box>
                     {isCardsLoading ? <Spinner /> : null}
+                    <div style={{
+                        display:"flex",
+                        flexDirection:"row",
+                        justifyContent:"space-between",
+                        width:"100%",
+                    }}>
+                        {flashcards.length > 0 && (
+                        <Typography 
+                            variant="h4" 
+                            sx={{
+                                margin: "0px",
+                                padding: "0px",
+                                alignContent:"center",
+                            }}>
+                            Flashcards Preview</Typography>
+                        )}
+                        {flashcards.length > 0 && (
+                            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={handleSaveMode}
+                                    sx={{
+                                        fontFamily: 'Roboto, Arial, sans-serif',
+                                        fontSize: '1rem',
+                                        fontWeight: 'bold',
+                                        margin: 1,
+                                        marginBottom: 4,
+                                        borderRadius:"8px",
+                                        backgroundColor: `${saveMode ? '#718e4d' : '#3a6b8a'}`,
+                                        transition: 'background-color 0.3s ease',
+                                        '&:hover': {
+                                            backgroundColor: `${saveMode ? '#5a6e42' : '#314f63'}`,
+                                        },
+                                    }}
+                                >
+                                    Select
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={handleSelectAll}
+                                    sx={{
+                                        fontFamily: 'Roboto, Arial, sans-serif',
+                                        fontSize: '1rem',
+                                        fontWeight: 'bold',
+                                        margin: 1,
+                                        marginBottom: 4,
+                                        borderRadius:"8px",
+                                        backgroundColor: "#3a6b8a",
+                                        '&:hover': { backgroundColor: '#314f63' },
+                                    }}
+                                >
+                                    Select All
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={handleOpen}
+                                    sx={{
+                                        fontFamily: 'Roboto, Arial, sans-serif',
+                                        fontSize: '1rem',
+                                        fontWeight: 'bold',
+                                        margin: 1,
+                                        marginBottom: 4,
+                                        borderRadius:"8px",
+                                        backgroundColor: "#718e4d",
+                                        '&:hover': { 
+                                            backgroundColor: '#5a7240' ,
+                                        }
+                                    }}
+                                >
+                                    Save
+                                </Button>
+                            </Box>
+                        )}
+                    </div>
                     {flashcards.length > 0 ? (
-                        <Grid container spacing={3} width="1200px">
+                        <Grid container spacing={3} mb={8} width="1200px">
                             {memoizedFlashcards}
                         </Grid>
                     ) : (
                         <Typography variant="h6" sx={{ mt: 4, color: 'white' }}>
                             No cards generated yet
                         </Typography>
-                    )}
-
-                    {flashcards.length > 0 && (
-                        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleOpen}
-                                sx={{
-                                    fontFamily: 'Roboto, Arial, sans-serif',
-                                    fontSize: '1rem',
-                                    fontWeight: 'bold',
-                                    margin: 1,
-                                    marginBottom: 4,
-                                    textDecoration: "bold",
-                                    backgroundColor: "#3a6b8a",
-                                    '&:hover': { backgroundColor: '#314f63' }
-                                }}
-                            >
-                                Save
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleSaveMode}
-                                sx={{
-                                    fontFamily: 'Roboto, Arial, sans-serif',
-                                    fontSize: '1rem',
-                                    fontWeight: 'bold',
-                                    margin: 1,
-                                    marginBottom: 4,
-                                    backgroundColor: `${saveMode ? '#718e4d' : '#3a6b8a'}`,
-                                    transition: 'background-color 0.3s ease',
-                                    '&:hover': {
-                                        backgroundColor: `${saveMode ? '#5a6e42' : '#314f63'}`,
-                                    },
-                                }}
-                            >
-                                Select
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleSelectAll}
-                                sx={{
-                                    fontFamily: 'Roboto, Arial, sans-serif',
-                                    fontSize: '1rem',
-                                    fontWeight: 'bold',
-                                    margin: 1,
-                                    marginBottom: 4,
-                                    backgroundColor: "#3a6b8a",
-                                    '&:hover': { backgroundColor: '#314f63' },
-                                }}
-                            >
-                                Select All
-                            </Button>
-                        </Box>
                     )}
                 </Box>
                 <Dialog open={open} onClose={handleClose}>
