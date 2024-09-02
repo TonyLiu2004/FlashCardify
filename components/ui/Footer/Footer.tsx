@@ -91,7 +91,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="flex flex-col items-center justify-between py-12 space-y-4 md:flex-row bg-zinc-900">
-        <div>
+        <div style={{display:"flex", flexDirection:"column"}}>
+        <a href="https://lordicon.com/">Icons by Lordicon.com</a> 
           <span>
             &copy; {new Date().getFullYear()} FlashCardify, Inc. All rights reserved.
           </span>

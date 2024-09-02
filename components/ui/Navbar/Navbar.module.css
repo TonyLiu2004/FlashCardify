@@ -3,11 +3,15 @@
 }
 
 .link {
-  @apply inline-flex items-center leading-6 font-medium transition ease-in-out duration-75 cursor-pointer text-zinc-200 rounded-md p-1;
+  @apply inline-flex items-center leading-6 font-bold transition ease-in-out duration-75 cursor-pointer text-zinc-200 rounded-md p-1;
+  font-family: 'Mark Pro', Arial, sans-serif;
+  padding: 8px 16px;
 }
 
 .link:hover {
   @apply text-zinc-100;
+  background-color:rgba(102, 107, 111, 0.433);
+  border-radius: 8px;
 }
 
 .link:focus {

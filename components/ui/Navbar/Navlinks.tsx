@@ -17,12 +17,14 @@ export default function Navlinks({ user }: NavlinksProps) {
   const router = getRedirectMethod() === 'client' ? useRouter() : null;
 
   return (
-    <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
+    <div className="relative flex flex-row justify-between py-4 align-center md:py-5" style={{
+      width:"90vw",
+    }}>
       <div className="flex items-center flex-1">
         <Link href="/" className={s.logo} aria-label="Logo">
           <Logo />
         </Link>
-        <nav className="ml-6 space-x-5 lg:block">
+        <nav className="ml-6 space-x-4 lg:block" style={{fontSize:"17px"}} >
           {user && (
             <>
             <Link href="/" className={s.link}>

@@ -317,7 +317,7 @@ export default function Generate() {
                         marginTop: 4, 
                         borderRadius:"16px",
                         boxShadow: '4px 8px 16px rgba(255, 255, 255, 0.4)',
-                        backgroundColor: "#f9f3e6",
+                        backgroundColor: "#e5e7eb",
                     }}>
                         <TextField
                             value={text}
@@ -332,23 +332,23 @@ export default function Generate() {
                                 '& .MuiOutlinedInput-root': {
                                     '& fieldset': {
                                         borderColor: 'black',
-                                        borderRadius:"16px",
+                                        borderRadius:"12px",
 
                                     },
                                     '&:hover fieldset': {
                                         borderColor: 'black',
-                                        borderRadius:"16px",
+                                        borderRadius:"12px",
 
                                     },
                                     '&.Mui-focused fieldset': {
                                         borderColor: 'black',
-                                        borderRadius:"16px",
+                                        borderRadius:"12px",
 
                                     },
                                 },
                                 '& .MuiInputLabel-root': {
                                     color: 'black',
-                                    borderRadius:"16px",
+                                    borderRadius:"12px",
 
                                 },
                             }}
@@ -365,7 +365,7 @@ export default function Generate() {
                                 width:"15vw",
                                 minWidth:"130px",
                                 margin:"0 auto",
-                                backgroundColor: '#45a049',
+                                backgroundColor: '#7fd1ae',
                                 padding: '8px 16px',
                                 borderRadius: '12px',
                                 fontSize: '16px',
@@ -376,7 +376,7 @@ export default function Generate() {
                                 transition: 'all 0.3s ease',
                                 position: 'relative',
                                 '&:hover': {
-                                    backgroundColor: '#388E3C',
+                                    backgroundColor: '#76ab94',
                                     transform: 'scale(1.03)',
                                 },
                             }}

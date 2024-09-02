@@ -2,8 +2,8 @@ import React from 'react';
 
 const Logo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    width="32"
-    height="32"
+    width="40" //was 32
+    height="40" //was 32
     viewBox="0 0 512 512"
     fill="black"
     xmlns="http://www.w3.org/2000/svg"

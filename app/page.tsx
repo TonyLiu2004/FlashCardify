@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import Pricing from '@/components/ui/Pricing/Pricing';
-import { Container, Box, Button, Typography } from '@mui/material';
-import Typing from 'react-typing-effect';
+import Features from '@/components/ui/Features/Features';
+import { Box, Button, Typography } from '@mui/material';
 import { Bounce } from 'react-awesome-reveal';
 import BackgroundCard from '@/components/ui/Animations/BackgroundCard';
 import { User } from '@supabase/supabase-js';
@@ -59,26 +59,25 @@ export default function PricingPage() {
       const cardWidth = 80;
       const cardHeight = 120;
       const maxAttempts = 100;
-      const halfWidth = (window.innerWidth - cardHeight) / 2;
-      const maxHeight = window.innerHeight - cardWidth;
+      const maxWidth = (window.innerWidth - cardWidth)/2.2;
+      const maxHeight = (window.innerHeight - cardHeight);
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 12; i++) {
         let position: FlashcardPosition;
         let attempts = 0;
         do {
           position = {
-            x: Math.random() * halfWidth,
+            x: Math.random() * maxWidth,
             y: Math.random() * maxHeight,
           };
-          if (i >= 5) {
-            position.x += halfWidth;
+          if (i >= 6) {
+            position.x +=  window.innerWidth / 2;
           }
           attempts++;
         } while (
           attempts < maxAttempts &&
           cards.some((card) => isOverlapping(card, position, cardWidth, cardHeight))
         );
-
         cards.push(position);
       }
       setBackgroundFlashcards(cards);
@@ -125,10 +124,9 @@ export default function PricingPage() {
   }
 
   return (
-    <Container>
+    <div>
       <Box
         height={'100vh'}
-        width='100%'
         display='flex'
         textAlign='center'
         alignItems={'center'}
@@ -138,44 +136,53 @@ export default function PricingPage() {
         zIndex={2}
       >
         <Bounce cascade>
-          <Typography variant='h1' style={{ margin: '2px' }}>
+          <Typography variant='h1' style={{ 
+            margin: '2px', 
+            fontFamily: 'cursive',
+            fontSize: 'clamp(5rem, 6vw, 12rem)'
+          }}>
             FlashCardify
           </Typography>
           <Typography variant='h5' style={{ margin: '2px' }}>
-            <Typing text={['Generate Your Own Flashcards With AI!']} speed={100} eraseDelay={1000} />
+            Generate Your Own Flashcards With AI!
           </Typography>
-          <Button
+        </Bounce>
+        <Button
             sx={{
-              backgroundColor: '#3469b6', // Primary button color
-              color: 'white', // Text color
-              borderRadius: '20px', // Rounded corners
-              padding: '10px 20px', // Padding for a bigger button
-              fontSize: '18px', // Larger font size for emphasis
-              fontWeight: 'bold', // Bold text for importance
-              border: 'none', // Removing the default border
-              marginTop: '16px', // Space above the button
-              textTransform: 'uppercase', // Uppercase text for clarity
-              transition: 'background-color 0.3s ease', // Smooth color transition
+              backgroundColor: '#3469b6', 
+              color: 'white', 
+              borderRadius: '16px', 
+              padding: '10px 20px', 
+              fontSize: '18px', 
+              fontWeight: 'bold', 
+              border: 'none', 
+              marginTop: '16px', 
+              textTransform: 'uppercase', 
+              transition: 'background-color 0.3s ease', 
+              opacity: 0, // Start with opacity 0 for fade-in effect
+              animation: 'fadeIn 1s forwards',
+              animationDelay: '1s',
               '&:hover': {
-                backgroundColor: '#2b5791', // Change to black on hover
+                backgroundColor: '#2b5791', 
               },
             }}
             onClick={handleScrollToPricing}
           >
             Get Started
           </Button>
-        </Bounce>
 
         {/* Render flashcards as background */}
         {backgroundFlashcards.map((card, index) => (
           <BackgroundCard key={index} x={card.x} y={card.y} />
         ))}
       </Box>
+      
+      <Features/>
 
       <Box ref={pricingRef}>
         <Pricing user={user} products={products ?? []} subscription={subscription} />
       </Box>
       
-    </Container>
+    </div>
   );
 }
