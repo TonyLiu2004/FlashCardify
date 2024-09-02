@@ -1013,6 +1013,47 @@ const getChallengeHistory = async (user_id: string) => {
   }
 };
 
+const getFeatureDeck = async (user_id: string) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('decks')
+      .select('id, name, description, visibility, likes_count')
+      .eq('visibility', 'public')
+      .order('likes_count', { ascending: false })
+      .limit(1);
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data || data.length === 0) {
+      throw new Error('No public decks found');
+    }
+
+    const featureDeck = data[0];
+
+    const { data: likes, error: likesError } = await supabaseAdmin
+      .from('likes')
+      .select('deck_id')
+      .eq('user_id', user_id)
+      .eq('deck_id', featureDeck.id);
+
+    if (likesError) {
+      throw new Error(`Error fetching likes: ${likesError.message}`);
+    }
+
+    const featureDeckWithLikeStatus = {
+      ...featureDeck,
+      isLiked: likes.length > 0,
+    };
+
+    return featureDeckWithLikeStatus;
+  } catch (err: any) {
+    console.error('Getting Feature Deck Failed: ', err.message);
+    throw err;
+  }
+};
+
 export {
   upsertProductRecord,
   upsertFlashcardRecord,
@@ -1037,5 +1078,6 @@ export {
   upsertQuestionRecord,
   updateQuestionsFields,
   getQuestions,
-  getChallengeHistory
+  getChallengeHistory,
+  getFeatureDeck
 };

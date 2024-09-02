@@ -33,6 +33,8 @@ const HomePage = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCloneModalOpen, setIsCloneModalOpen] = useState(false);
     const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+    const [featureDeck, setFeatureDeck] = useState<Deck | null>(null);
+
 
     const router = useRouter();
 
@@ -51,7 +53,6 @@ const HomePage = () => {
         setCurrentDeckVisibility(visibility);
         setIsPublishModalOpen(true);
     };
-
     useEffect(() => {
         const fetchUserDataAndStats = async () => {
             try {
@@ -99,6 +100,26 @@ const HomePage = () => {
                 } else {
                     setDecks([]);
                 }
+                const fetchFeatureDeck = async () => {
+                    try {
+                        const response = await fetch(`/api/feature?user_id=${userData.id}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch the feature deck');
+                        }
+                        const data = await response.json();
+                        setFeatureDeck(data.data);
+                    } catch (error) {
+                        console.error('Error fetching feature deck:', error);
+                    }
+                };
+
+                await fetchFeatureDeck();
+
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setDecks([]);
@@ -109,6 +130,7 @@ const HomePage = () => {
 
         fetchUserDataAndStats();
     }, []);
+
 
     if (!user) {
         return <div className='text-center'>Loading...</div>;
@@ -169,9 +191,9 @@ const HomePage = () => {
                                                 onClone={() => openCloneModal(deck.id)}
                                                 onPublish={() => {
                                                     if (deck.id && deck.visibility) {
-                                                      openPublishModal(deck.id, deck.visibility);
+                                                        openPublishModal(deck.id, deck.visibility);
                                                     }
-                                                  }}
+                                                }}
                                             />
                                         )
                                     ))}
@@ -201,15 +223,20 @@ const HomePage = () => {
                     </div>
                     <div className="bg-white shadow-lg rounded-xl p-6 w-full flex flex-col items-center">
                         <h3 className="text-lg font-semibold text-black mb-4">Featured Deck</h3>
-                        {user?.id && 
-                        <DeckComponent 
-                            title="React Basics" 
-                            userId={"test"}
-                            description="Learn the basics of React, the popular JavaScript library." 
-                            id={"test"} 
-                            showDescription 
-                            onClone={() => openCloneModal('test')} 
-                            />}
+                        {(user?.id && featureDeck) && (
+                            <div className='w-3/4'>
+                                <DeckComponent
+                                    title={featureDeck.name}
+                                    userId={user.id}
+                                    description={featureDeck.description}
+                                    id={featureDeck.id}
+                                    isLiked={featureDeck.isLiked}
+                                    showDescription={true}
+                                    onClone={() => openCloneModal(featureDeck.id)}
+                                />
+                            </div>
+                        )}
+
                     </div>
                 </div>
             </div>
