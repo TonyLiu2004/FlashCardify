@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getFeatureDeck } from '@/utils/supabase/admin';
 
-export const dynamic = 'force-dynamic';
+// May not need this. -- Remove at BUILD 
+// export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
