@@ -117,7 +117,7 @@ const Deck: React.FC<DeckProps> = ({
     return (
         <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between h-full hover:shadow-xl transition-shadow duration-300 relative"
             style={{
-                backgroundColor: "#f9f3e6",
+                backgroundColor: "#c8c9d3",
             }}
         >
             <div className="absolute top-2 right-2 flex items-center space-x-2">
@@ -201,7 +201,10 @@ const Deck: React.FC<DeckProps> = ({
                 }
             </div>
             <div className="mt-auto">
-                <button className="bg-black text-white text-sm font-medium py-2 px-4 rounded hover:bg-pink-500 transition-colors duration-300 w-full"
+                <button className="text-white text-sm font-medium py-2 px-4 rounded hover:bg-pink-500 transition-colors duration-300 w-full"
+                style={{
+                    backgroundColor:"#3e4756"
+                }}
                     onClick={handleClick}
                 >
                     View Deck

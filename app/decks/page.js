@@ -245,10 +245,15 @@ export default function Decks() {
 
 
     return (
-        <div>
-            <Container maxWidth="100vw">
-                <Typography variant="h4" textAlign="center">Your Decks</Typography>
-                <div style={{ display: 'flex', alignItems: 'center', margin: '16px' }}>
+        <div style={{backgroundColor:"#e5e7eb", height:"100vh", paddingTop:"20px"}}>
+            <Container maxWidth="100vw" sx={{mt: 14}}>
+                <h2 style={{color:"#1f2937", 
+                    fontSize:"40px", 
+                    textAlign:"center", 
+                    fontWeight: "bold",
+                    fontFamily: "'Poppins', sans-serif",
+                }}>Your Decks</h2>
+                <div style={{ display: 'flex', alignItems: 'center', margin: '30px' }}>
                     <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
                         <input
                             type="text"
@@ -276,7 +281,11 @@ export default function Decks() {
                             fontWeight: 'bold',
                             marginLeft: 3,
                             backgroundColor: "#3a6b8a",
-                            '&:hover': { backgroundColor: '#314f63' },
+                            transition: 'all 0.3s ease',
+                            '&:hover': { 
+                                backgroundColor: '#314f63' ,
+                                transform: 'scale(1.03)',
+                            },
                         }}
                     >
                         New Deck
@@ -306,9 +315,9 @@ export default function Decks() {
                             </Grid>
                         ))
                     ) : isDecksLoading ? (
-                        <p>Loading...</p>
+                        <p style={{color:"black", margin:"0 auto"}}>Loading...</p>
                     ) : (
-                        <p>No decks found.</p>
+                        <p style={{color:"black", margin:"0 auto"}}>No decks found.</p>
                     )}
                 </Grid>
 

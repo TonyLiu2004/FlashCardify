@@ -303,7 +303,7 @@ export default function Generate() {
         <div>
             <Container>
                 <Box sx={{
-                    mt: 4,
+                    mt: 14,
                     mb: 1,
                     display: 'flex',
                     flexDirection: 'column',
@@ -315,7 +315,7 @@ export default function Generate() {
                         p: 4, 
                         width: "100%", 
                         marginTop: 4, 
-                        borderRadius:"16px",
+                        borderRadius:"10px",
                         boxShadow: '4px 8px 16px rgba(255, 255, 255, 0.4)',
                         backgroundColor: "#e5e7eb",
                     }}>
@@ -332,23 +332,23 @@ export default function Generate() {
                                 '& .MuiOutlinedInput-root': {
                                     '& fieldset': {
                                         borderColor: 'black',
-                                        borderRadius:"12px",
+                                        borderRadius:"10px",
 
                                     },
                                     '&:hover fieldset': {
                                         borderColor: 'black',
-                                        borderRadius:"12px",
+                                        borderRadius:"10px",
 
                                     },
                                     '&.Mui-focused fieldset': {
                                         borderColor: 'black',
-                                        borderRadius:"12px",
+                                        borderRadius:"10px",
 
                                     },
                                 },
                                 '& .MuiInputLabel-root': {
                                     color: 'black',
-                                    borderRadius:"12px",
+                                    borderRadius:"10px",
 
                                 },
                             }}
@@ -365,18 +365,18 @@ export default function Generate() {
                                 width:"15vw",
                                 minWidth:"130px",
                                 margin:"0 auto",
-                                backgroundColor: '#7fd1ae',
+                                backgroundColor: '#a3cfcd',
                                 padding: '8px 16px',
                                 borderRadius: '12px',
                                 fontSize: '16px',
                                 fontWeight: 'bold',
                                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-                                color: 'white',
+                                color: '#28161c',
                                 border: '2px solid transparent',
                                 transition: 'all 0.3s ease',
                                 position: 'relative',
                                 '&:hover': {
-                                    backgroundColor: '#76ab94',
+                                    backgroundColor: '#82a0aa',
                                     transform: 'scale(1.03)',
                                 },
                             }}

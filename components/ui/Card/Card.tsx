@@ -15,6 +15,15 @@ interface CardProps {
   onDelete: (flashcard: object) => void;
 }
 
+const flashcardsx = {
+    width: '100%', 
+    justifyContent: 'center', 
+    display: '-webkit-box',
+    WebkitLineClamp: 4, // limits to a max of 4 lines
+    WebkitBoxOrient: 'vertical',
+    padding:"8px",
+}
+
 
 const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdit, onDelete}) => {
   const [flipped, setFlipped] = useState(false)
@@ -129,9 +138,11 @@ const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdi
                         transform: 'rotateX(180deg)',
                     }
                 }}>
-                    <div>
+                    <div style={{
+                        textAlign:"center",
+                    }}>
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                            <Typography variant="h5" component="div" sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                            <Typography variant="h5" component="div" sx={{...flashcardsx}}>
                                 {isEditing ? (
                                   <textarea 
                                     value={cardFront}
@@ -155,7 +166,7 @@ const Card: React.FC<CardProps> = ({ flashcard, id, front_text, back_text, onEdi
                             </Typography>
                         </div>
                         <div>
-                            <Typography variant="h5" component="div" sx={{ fontSize: '22px', width: '100%', display: 'flex', justifyContent: 'center'  }}>
+                            <Typography variant="h5" component="div" sx={{...flashcardsx}}>
                             {isEditing ? (
                                   <textarea 
                                     value={cardBack}

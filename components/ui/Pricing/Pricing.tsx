@@ -103,11 +103,10 @@ export default function Pricing({ user, products, subscription }: Props) {
   } else {
     return (
       <section style={{
-        backgroundColor:"#e7e6e3",
+        backgroundColor:"#f0eee8",
         paddingBottom:"100px"
       }}>
         <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8" style={{
-          backgroundColor:"#e5e7eb",
           borderRadius:"32px",
         }}>
           <div className="sm:flex sm:flex-col sm:align-center">
