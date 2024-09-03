@@ -44,7 +44,7 @@ const flashcardDisplaysx = {
   height: '25rem',
   userSelect: 'none',
   padding:"5rem",
-  paddingTop:"1rem"
+  paddingTop:"1rem",
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
@@ -69,7 +69,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         display: 'flex',
         flexDirection: 'row',
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}
     >
       <PrevButton
@@ -105,6 +105,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         sx={{
                             borderRadius: '8px',
                             padding: "0",
+                            minWidth:"40vw",
                         }}
                     >
                         <Box sx={{
@@ -126,7 +127,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 backfaceVisibility: "hidden",
                                 display: 'flex',
                                 justifyContent: 'center',
-                                alignItems: "center",
                                 padding: 2,
                                 boxSizing: 'border-box',
                                 overflow: 'auto',
@@ -140,7 +140,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                             <div style={{
                                 textAlign:"center",
                             }}>
-                                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                <div>
                                     <Typography variant="h5" component="div" sx={{...flashcardsx}}>
                                         {flashcard.front_text}
                                     </Typography>
