@@ -1,9 +1,9 @@
 'use client'
-import { ReactNode, useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/SecondButton/button';
-import { Divider, Grid, Container, Box, TextField, Typography, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText} from "@mui/material"
+import { Box, Typography, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText} from "@mui/material"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/Navbar/dropdown-menu';
-import { Check, X, MoreHorizontal, Star } from 'lucide-react';
+import { Check, X, MoreHorizontal } from 'lucide-react';
 
 interface CardProps {
   flashcard: object,
