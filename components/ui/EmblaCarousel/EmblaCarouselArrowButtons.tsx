@@ -61,7 +61,6 @@ export const PrevButton: React.FC<PropType> = (props) => {
       {...restProps}
       style={{
         margin: 'auto 0',
-        border: '2px solid blue',
         height: '50vh',
         display: 'flex',
         alignItems: 'center',
@@ -92,7 +91,6 @@ export const NextButton: React.FC<PropType> = (props) => {
       {...restProps}
       style={{
         margin: 'auto 0',
-        border: '2px solid blue',
         height: '50vh',
         display: 'flex',
         alignItems: 'center',
@@ -100,6 +98,7 @@ export const NextButton: React.FC<PropType> = (props) => {
         overflow: 'hidden',
         boxSizing: 'border-box', 
         borderRadius:"8px",
+        transition: "background-color 0.3s ease, transform 0.3s ease",
       }}
     >
       <svg className="embla__button__svg" viewBox="0 0 532 532">

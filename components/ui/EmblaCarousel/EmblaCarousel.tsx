@@ -35,6 +35,18 @@ const flashcardsx = {
   padding:"8px",
 }
 
+const flashcardDisplaysx = {
+  borderRadius: '1.8rem',
+  fontSize: '16px',
+  fontWeight: 600,
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '25rem',
+  userSelect: 'none',
+  padding:"5rem",
+  paddingTop:"1rem"
+};
+
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options)
@@ -64,27 +76,20 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         onClick={onPrevButtonClick}
         disabled={prevBtnDisabled}
       />
-      <section className="embla" style={{ width: '60vw', margin: '20px' }}>
+      <section className="embla" style={{ width: '60vw', margin: '20px'}}>
         <div className="embla__viewport" ref={emblaRef}>
           <div className="embla__container">
             {slides.map((flashcard, index) => (
               <div className="embla__slide" key={index}>
-                <div
-                  className="embla__slide__number"
-                  style={{ 
-                    border: '3px solid red', 
-                    overflow: "hidden",
-                    padding:"20px",
-                    fontSize:"16px",
-                  }}
-                >
                   {/* FLASHCARD CODE */}
                   <CardActionArea
+                    key={index}
                     onClick={() => {
                       handleCardClick();
                     }}
                     disableRipple
                     sx={{
+                      ...flashcardDisplaysx,
                         '&:focus': {
                             outline: 'none',  // Disable the default focus outline
                             boxShadow: 'none', // Disable the focus ring
@@ -99,7 +104,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                     <CardContent
                         sx={{
                             borderRadius: '8px',
-                            padding: 0,
+                            padding: "0",
                         }}
                     >
                         <Box sx={{
@@ -109,8 +114,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 transformStyle: 'preserve-3d',
                                 position: 'relative',
                                 width: "100%",
-                                height: "200px",
-                                borderRadius:"8px",
+                                height: "23rem",
+                                borderRadius:"1.8rem",
                                 transform: flipped ? 'rotateX(180deg)' : 'rotateX(0deg)',
                                 background: flipped ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
                             },
@@ -125,7 +130,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 padding: 2,
                                 boxSizing: 'border-box',
                                 overflow: 'auto',
-                                borderRadius:"8px",
+                                borderRadius:"1.8rem",
                                 background: flipped ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
                             },
                             '& > div > div:nth-of-type(2)': {
@@ -155,7 +160,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
 
                   {/** END FLASHCARD CODE */}
-                </div>
+                {/* </div> */}
               </div>
             ))}
           </div>
