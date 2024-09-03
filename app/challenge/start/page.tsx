@@ -250,8 +250,8 @@ export default function ChallengeStart() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-800 text-white">
-            <div className="w-full max-w-2xl p-6 bg-black rounded-lg shadow-lg">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-primaryBackground text-textColor">
+            <div className="w-full max-w-2xl p-6 bg-secondaryBackground rounded-lg shadow-lg">
                 <h1 className="text-2xl font-bold text-center mb-6">Challenge</h1>
                 {mode === 'timed' && timeLeft !== null && (
                     <div className="text-center text-lg mb4">
@@ -274,7 +274,7 @@ export default function ChallengeStart() {
                                     <button
                                         key={index}
                                         onClick={() => handleAnswerSelection(questions[currentQuestionIndex][choice])}
-                                        className="p-4 bg-zinc-700 rounded hover:bg-zinc-600 transition"
+                                        className="p-4 bg-buttonBackground rounded hover:bg-zinc-600 transition"
                                         disabled={isFinishing}
                                     >
                                         {questions[currentQuestionIndex][choice]}

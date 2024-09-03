@@ -245,7 +245,7 @@ export default function Decks() {
 
 
     return (
-        <div style={{backgroundColor:"#e5e7eb", height:"100vh", paddingTop:"20px"}}>
+        <div style={{backgroundColor:"#e7e6e3", height:"100vh", paddingTop:"20px"}}>
             <Container maxWidth="100vw" sx={{mt: 14}}>
                 <h2 style={{color:"#1f2937", 
                     fontSize:"40px", 
@@ -273,17 +273,17 @@ export default function Decks() {
                     </div>
                     <Button 
                         variant="contained"
-                        color="secondary"
                         onClick={handleOpen}
                         sx={{
                             fontFamily: 'Roboto, Arial, sans-serif',
                             fontSize: '1rem',
                             fontWeight: 'bold',
                             marginLeft: 3,
-                            backgroundColor: "#3a6b8a",
+                            backgroundColor: "#B0C4DE",
+                            color:'#4A4A4A',
                             transition: 'all 0.3s ease',
                             '&:hover': { 
-                                backgroundColor: '#314f63' ,
+                                backgroundColor: '#91A4BC' ,
                                 transform: 'scale(1.03)',
                             },
                         }}

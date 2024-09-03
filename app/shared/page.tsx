@@ -81,7 +81,7 @@ export default function PublicPage() {
 
     return (
         <div className="p-10" style={{
-            backgroundColor:"#e5e7eb", 
+            backgroundColor:"#e7e6e3", 
             height:"100vh", 
             width:"100%",
             paddingTop:"16vh",

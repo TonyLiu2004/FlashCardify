@@ -117,7 +117,7 @@ const Deck: React.FC<DeckProps> = ({
     return (
         <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between h-full hover:shadow-xl transition-shadow duration-300 relative"
             style={{
-                backgroundColor: "#c8c9d3",
+                backgroundColor: "#FAFAFA",
             }}
         >
             <div className="absolute top-2 right-2 flex items-center space-x-2">
@@ -172,19 +172,19 @@ const Deck: React.FC<DeckProps> = ({
                         type="text"
                         value={deckName}
                         onChange={(e) => setDeckName(e.target.value)}
-                        className="text-lg font-semibold text-gray-800 truncate w-full border-b-2 focus:outline-none"
+                        className="text-lg font-semibold text-textColor truncate w-full border-b-2 focus:outline-none"
                         style={{
                             backgroundColor: "#f2f2f2",
                         }}
                     />
                 ) : (
-                    <h3 className="text-lg font-semibold text-gray-800 truncate">{truncateTitle(deckName)}</h3>
+                    <h3 className="text-lg font-semibold text-textColor truncate">{truncateTitle(deckName)}</h3>
                 )}
                 {isEditing ? (
                     <textarea
                         value={deckDescription}
                         onChange={(e) => setDeckDescription(e.target.value)}
-                        className="text-lg font-semibold text-gray-800 truncate w-full border-b-2 focus:outline-none"
+                        className="text-lg font-semibold text-textColor truncate w-full border-b-2 focus:outline-none"
                         style={{
                             backgroundColor: "#f2f2f2",
                         }}
@@ -201,9 +201,9 @@ const Deck: React.FC<DeckProps> = ({
                 }
             </div>
             <div className="mt-auto">
-                <button className="text-white text-sm font-medium py-2 px-4 rounded hover:bg-pink-500 transition-colors duration-300 w-full"
+                <button className="text-textColor text-sm font-medium py-2 px-4 rounded hover:bg-pink-500 transition-colors duration-300 w-full"
                 style={{
-                    backgroundColor:"#3e4756"
+                    backgroundColor:"#B0C4DE"
                 }}
                     onClick={handleClick}
                 >

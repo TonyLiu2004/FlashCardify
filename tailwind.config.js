@@ -2,7 +2,8 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class', '[data-theme="dark"]'],
+  //darkMode: ['class', '[data-theme="dark"]'],
+  darkMode: false,
   content: [
     'app/**/*.{ts,tsx}',
     'components/**/*.{ts,tsx}',
@@ -33,6 +34,14 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
+      },
+      colors: {
+        primaryBackground: '#e7e6e3',
+        secondaryBackground: '#FAFAFA',
+        textColor: '#4A4A4A', // Charcoal Gray
+        buttonBackground: '#B0C4DE', // Misty Blue
+        buttonHover: '#91A4BC', // Darker Misty Blue
+        borderColor: '#4A4A4A' // Charcoal Gray for border
       }
     }
   },
