@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import LoadingDots from '@/components/ui/LoadingDots';
+import type { Flashcard, CleanedFlashcard } from '@/types';
 
 export default function ChallengePage() {
     const [decks, setDecks] = useState<any[] | null>(null);
@@ -75,6 +76,31 @@ export default function ChallengePage() {
         }
     };
 
+    const questionGenerators: { [key: string]: (flashcards: CleanedFlashcard[]) => Promise<any> } = {
+        standard: async (flashcards) => await generateQuestionsAPI(flashcards, 'standard'),
+        timed: async (flashcards) => await generateQuestionsAPI(flashcards, 'timed'),
+        //More modes here
+    };
+
+    const generateQuestionsAPI = async (flashcards: CleanedFlashcard[], mode: string) => {
+        const generateQuestionsResponse = await fetch('/api/generate/challenge', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                flashcards,
+                mode,
+            }),
+        });
+
+        if (!generateQuestionsResponse.ok) {
+            throw new Error('Error generating quiz questions.');
+        }
+
+        return await generateQuestionsResponse.json();
+    };
+
     const handleStartChallenge = async () => {
         if (!selectedDeck) {
             setMessage('Please select a deck to start the challenge.');
@@ -84,7 +110,7 @@ export default function ChallengePage() {
         try {
             setIsStarting(true);
             const newChallengeId = uuidv4();
-            const startTime = Date.now();
+
             const createChallengeResponse = await fetch('/api/challenge', {
                 method: 'POST',
                 headers: {
@@ -111,45 +137,39 @@ export default function ChallengePage() {
                 throw new Error('Error fetching flashcards.');
             }
 
-            const flashcardsData = await flashcardsResponse.json();
-            const generateQuestionsResponse = await fetch('/api/generate/challenge', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    flashcards: flashcardsData.data,
-                    mode: quizMode,
-                }),
-            });
-            if (!generateQuestionsResponse.ok) {
-                throw new Error('Error generating quiz questions.');
-            }
+            const { data: flashcards }: { data: Flashcard[] } = await flashcardsResponse.json();
+            const cleanedFlashcards: CleanedFlashcard[] = flashcards.map(({ user_id, created_at, updated_at, deck_id, ...rest }) => rest);
 
-            const questionsData = await generateQuestionsResponse.json();
+            const questionsData = await questionGenerators[quizMode](cleanedFlashcards);
             if (questionsData && questionsData.questions) {
+                const questionsArray = questionsData.questions.questions;
+                console.log(questionsArray);
+
                 const insertQuestionsResponse = await fetch('/api/challenge/questions/batch', {
                     method: 'POST',
                     headers: {
+                        'Challenge-Type': quizMode,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        questions: questionsData.questions.questions.map((question: any, index: number) => ({
-                            id: uuidv4(),
-                            challenge_id: newChallengeId,
-                            question_number: index + 1,
-                            flashcard_id: question.flashcard_id,
-                            question: question.question,
-                            choice_a: question.choice_a,
-                            choice_b: question.choice_b,
-                            choice_c: question.choice_c,
-                            choice_d: question.choice_d,
-                            answer: question.answer,
-                            user_answer: null,
-                            status: 'not completed',
-                            shuffle_index: Math.floor(Math.random() * 100),
-                            created_at: new Date().toISOString(),
-                        }))
+                        questions: questionsArray.map((question: any, index: number) => {
+                            return {
+                                id: uuidv4(),
+                                challenge_id: newChallengeId,
+                                question_number: index + 1,
+                                flashcard_id: question.flashcard_id,
+                                question: question.question,
+                                choice_a: question.choice_a || 'NA',
+                                choice_b: question.choice_b || 'NA',
+                                choice_c: question.choice_c || 'NA',
+                                choice_d: question.choice_d || 'NA',
+                                answer: question.answer,
+                                user_answer: null,
+                                status: 'not completed',
+                                shuffle_index: Math.floor(Math.random() * 100),
+                                created_at: new Date().toISOString(),
+                            };
+                        }),
                     }),
                 });
 
@@ -211,7 +231,7 @@ export default function ChallengePage() {
                     >
                         <option value="standard">Standard</option>
                         <option value="timed">Timed</option>
-                        <option value="hardcore">Hardcore</option>
+                        {/* Add more modes here as needed */}
                     </select>
                 </div>
                 {message && <p className="text-red-500 text-center mb-4">{message}</p>}

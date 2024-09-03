@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import LoadingDots from '@/components/ui/LoadingDots';
+
 type Question = {
     id: string;
     challenge_id: string;
@@ -27,6 +28,7 @@ export default function ChallengeStart() {
     const [isFinishing, setIsFinishing] = useState(false);
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [startTime, setStartTime] = useState<number | null>(null);
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [user, setUser] = useState<any | null>(null);
     const router = useRouter();
@@ -149,7 +151,7 @@ export default function ChallengeStart() {
             const correctChoice = q[q.answer as keyof Question];
             return q.user_answer === correctChoice;
         }).length;
-        
+
         const totalQuestions = questions.length;
         const incorrectAnswers = totalQuestions - correctAnswers;
         const accuracy = correctAnswers / totalQuestions;
@@ -220,10 +222,14 @@ export default function ChallengeStart() {
 
     const handleAnswerSelection = (selectedAnswer: string) => {
         const currentQuestion = questions[currentQuestionIndex];
+        setSelectedAnswer(selectedAnswer);
         updateQuestionInDatabase(currentQuestion.id, selectedAnswer);
+    };
 
+    const handleContinue = () => {
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setSelectedAnswer(null);
         } else {
             finishChallenge();
         }
@@ -249,12 +255,15 @@ export default function ChallengeStart() {
         return <p className="text-center text-zinc-200">Loading...</p>;
     }
 
+    const currentQuestion = questions[currentQuestionIndex];
+    const correctAnswer = currentQuestion[currentQuestion.answer as keyof Question];
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-800 text-white">
-            <div className="w-full max-w-2xl p-6 bg-black rounded-lg shadow-lg">
+            <div className="w-full max-w-2xl p-6 bg-black rounded-lg shadow-lg pb-20 relative">
                 <h1 className="text-2xl font-bold text-center mb-6">Challenge</h1>
                 {mode === 'timed' && timeLeft !== null && (
-                    <div className="text-center text-lg mb4">
+                    <div className="text-center text-lg mb-4">
                         Time Left: <span className="font-bold">{timeLeft}</span> seconds
                     </div>
                 )}
@@ -263,24 +272,33 @@ export default function ChallengeStart() {
                         <p className="text-xl mb-4">
                             Question {currentQuestionIndex + 1}/{questions.length}
                         </p>
-                        <p className="text-lg mb-6">{questions[currentQuestionIndex].question}</p>
-                        {isFinishing ? (
-                            <div className="flex justify-center items-center h-20">
-                                <LoadingDots />
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-2 gap-4">
-                                {(['choice_a', 'choice_b', 'choice_c', 'choice_d'] as const).map((choice, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => handleAnswerSelection(questions[currentQuestionIndex][choice])}
-                                        className="p-4 bg-zinc-700 rounded hover:bg-zinc-600 transition"
-                                        disabled={isFinishing}
-                                    >
-                                        {questions[currentQuestionIndex][choice]}
-                                    </button>
-                                ))}
-                            </div>
+                        <p className="text-lg mb-6">{currentQuestion.question}</p>
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                            {(['choice_a', 'choice_b', 'choice_c', 'choice_d'] as const).map((choice, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => handleAnswerSelection(currentQuestion[choice])}
+                                    className={`p-4 rounded transition ${selectedAnswer
+                                            ? currentQuestion[choice] === correctAnswer
+                                                ? 'bg-green-500'
+                                                : currentQuestion[choice] === selectedAnswer
+                                                    ? 'bg-red-500'
+                                                    : 'bg-zinc-700'
+                                            : 'bg-zinc-700 hover:bg-zinc-600'
+                                        }`}
+                                    disabled={!!selectedAnswer}
+                                >
+                                    {currentQuestion[choice]}
+                                </button>
+                            ))}
+                        </div>
+                        {selectedAnswer && (
+                            <button
+                                onClick={handleContinue}
+                                className="p-4 bg-zinc-700 rounded hover:bg-zinc-600 transition absolute bottom-4 right-6"
+                            >
+                                Continue
+                            </button>
                         )}
                     </div>
                 )}
