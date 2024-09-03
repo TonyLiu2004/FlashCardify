@@ -28,18 +28,22 @@ export default function PricingPage() {
           fetch('/api/subscriptions'),
         ]);
 
-        if (!userRes.ok || !productsRes.ok || !subscriptionRes.ok) {
-          throw new Error('Failed to fetch data');
+        if (!userRes.ok) {
+          throw new Error('Failed to fetch user data');
         }
-
-        const [userData, productsData, subscriptionData] = await Promise.all([
-          userRes.json(),
-          productsRes.json(),
-          subscriptionRes.json(),
-        ]);
-
+        const userData = await userRes.json();
         setUser(userData);
+
+        if (!productsRes.ok) {
+          throw new Error('Failed to fetch products data');
+        }
+        const productsData = await productsRes.json();
         setProducts(productsData);
+
+        if (!subscriptionRes.ok) {
+          throw new Error('Failed to fetch subscription data');
+        }
+        const subscriptionData = await subscriptionRes.json();
         setSubscription(subscriptionData);
       } catch (error: unknown) {
         setError(error instanceof Error ? error.message : 'An unknown error occurred.');
@@ -59,8 +63,8 @@ export default function PricingPage() {
       const cardWidth = 80;
       const cardHeight = 120;
       const maxAttempts = 100;
-      const maxWidth = (window.innerWidth - cardWidth)/2.2;
-      const maxHeight = (window.innerHeight - cardHeight);
+      const maxWidth = (window.innerWidth - cardWidth) / 2.2;
+      const maxHeight = window.innerHeight - cardHeight;
 
       for (let i = 0; i < 12; i++) {
         let position: FlashcardPosition;
@@ -71,7 +75,7 @@ export default function PricingPage() {
             y: Math.random() * maxHeight,
           };
           if (i >= 6) {
-            position.x +=  window.innerWidth / 2;
+            position.x += window.innerWidth / 2;
           }
           attempts++;
         } while (
@@ -119,10 +123,6 @@ export default function PricingPage() {
     return <p className='text-center justify-center'>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
   return (
     <div>
       <Box
@@ -136,11 +136,14 @@ export default function PricingPage() {
         zIndex={2}
       >
         <Bounce cascade>
-          <Typography variant='h1' style={{ 
-            margin: '2px', 
-            fontFamily: 'cursive',
-            fontSize: 'clamp(5rem, 6vw, 12rem)'
-          }}>
+          <Typography
+            variant='h1'
+            style={{
+              margin: '2px',
+              fontFamily: 'cursive',
+              fontSize: 'clamp(5rem, 6vw, 12rem)',
+            }}
+          >
             FlashCardify
           </Typography>
           <Typography variant='h5' style={{ margin: '2px' }}>
@@ -148,41 +151,46 @@ export default function PricingPage() {
           </Typography>
         </Bounce>
         <Button
-            sx={{
-              backgroundColor: '#3469b6', 
-              color: 'white', 
-              borderRadius: '16px', 
-              padding: '10px 20px', 
-              fontSize: '18px', 
-              fontWeight: 'bold', 
-              border: 'none', 
-              marginTop: '16px', 
-              textTransform: 'uppercase', 
-              transition: 'background-color 0.3s ease', 
-              opacity: 0, // Start with opacity 0 for fade-in effect
-              animation: 'fadeIn 1s forwards',
-              animationDelay: '1s',
-              '&:hover': {
-                backgroundColor: '#2b5791', 
-              },
-            }}
-            onClick={handleScrollToPricing}
-          >
-            Get Started
-          </Button>
+          sx={{
+            backgroundColor: '#3469b6',
+            color: 'white',
+            borderRadius: '16px',
+            padding: '10px 20px',
+            fontSize: '18px',
+            fontWeight: 'bold',
+            border: 'none',
+            marginTop: '16px',
+            textTransform: 'uppercase',
+            transition: 'background-color 0.3s ease',
+            opacity: 0, // Start with opacity 0 for fade-in effect
+            animation: 'fadeIn 1s forwards',
+            animationDelay: '1s',
+            '&:hover': {
+              backgroundColor: '#2b5791',
+            },
+          }}
+          onClick={handleScrollToPricing}
+        >
+          Get Started
+        </Button>
 
         {/* Render flashcards as background */}
         {backgroundFlashcards.map((card, index) => (
           <BackgroundCard key={index} x={card.x} y={card.y} />
         ))}
       </Box>
-      
-      <Features/>
+
+      <Features />
 
       <Box ref={pricingRef}>
-        <Pricing user={user} products={products ?? []} subscription={subscription} />
+        {error ? (
+          <Typography color="error" variant="h6">
+            Failed to load pricing information. Please try again later.
+          </Typography>
+        ) : (
+          <Pricing user={user} products={products} subscription={subscription} />
+        )}
       </Box>
-      
     </div>
   );
 }
