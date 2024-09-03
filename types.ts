@@ -80,4 +80,15 @@ export interface Deck {
     isLiked: boolean;
     likes?: { id: string; user_id: string; created_at: string }[];
   }
-  
+
+export type Flashcard = {
+    id: string;
+    user_id: string;
+    front_text: string;
+    back_text: string;
+    created_at: string;
+    updated_at: string;
+    deck_id: string;
+};
+
+export type CleanedFlashcard = Omit<Flashcard, 'user_id' | 'created_at' | 'updated_at' | 'deck_id'>;

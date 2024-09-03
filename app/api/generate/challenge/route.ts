@@ -30,16 +30,18 @@ export async function POST(req: Request) {
         const flashcards = data.flashcards;
 
         const systemPrompt = `
-        You are an AI tasked with generating a quiz based on a set of flashcards. Your goal is to create exactly ${numFlashcards} multiple-choice questions. Each question should be clear, focused on a single concept, and approximately equal in difficulty.
+        You are an AI tasked with generating a quiz based on a set of flashcards. Your goal is to create exactly 10 multiple-choice questions. Each question should be clear, focused on a single concept, and approximately equal in difficulty.
         
         Instructions:
         1. Each question must be based on the content provided in the flashcards.
-        2. Ensure that each question is relevant and concise.
+        2. Ensure that each question is relevant, concise, and not repetitive in a way that makes multiple questions trivial or identical.
         3. Provide four answer choices (labeled as choice_a, choice_b, choice_c, choice_d) for each question.
         4. Include the correct answer within the choices.
         5. Ensure that the correct answer is based on the information from the corresponding flashcard.
         6. Distribute the difficulty of questions evenly across the quiz.
-        7. Return ${numFlashcards} questions in the following strict JSON format, with an array of questions under a 'questions' key:
+        7. If you find it difficult to generate 10 direct questions, create additional questions by slightly expanding the context or application of the flashcard content, ensuring relevance to the topic without being overly repetitive.
+        8. Avoid creating multiple questions that test the same simple concept in the same way. Instead, create a new question that challenges the user to think about the concept in a different or slightly broader context.
+        9. Return 10 questions in the following strict JSON format, with an array of questions under a 'questions' key:
         
         {
           "questions": [
@@ -56,8 +58,9 @@ export async function POST(req: Request) {
           ]
         }
         
-        Only return the JSON object in the format specified above. Do not include any other keys such as 'quiz' or variations in structure. The key must be 'questions' and the value must be an array of questions.
+        Return exactly 10 questions. Only return the JSON object in the format specified above. Do not include any other keys such as 'quiz' or variations in structure. The key must be 'questions' and the value must be an array of questions.
         `;
+        
 
         const openai = new OpenAI();
         const completion = await openai.chat.completions.create({

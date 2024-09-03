@@ -17,40 +17,41 @@ export default function Navlinks({ user }: NavlinksProps) {
   const router = getRedirectMethod() === 'client' ? useRouter() : null;
 
   return (
-    <div className="relative flex flex-row justify-between py-4 align-center md:py-5" style={{
-      width:"90vw",
-    }}>
-      <div className="flex items-center flex-1">
+    <div className="flex items-center justify-between py-2 px-4 h-20" style={{ width: "90vw" }}>
+      <div className="flex items-center">
         <Link href="/" className={s.logo} aria-label="Logo">
-          <Logo />
+          <img src="/new_logo.png" className="h-14 w-auto" alt="FlashCardify Logo" />
         </Link>
-        <nav className="ml-6 space-x-4 lg:block" style={{fontSize:"17px"}} >
+        <nav className="ml-6 space-x-4 lg:block" style={{ fontSize: "17px" }}>
           {user && (
             <>
-            <Link href="/" className={s.link}>
-              Home
-            </Link>
-            <Link href="/generate" className={s.link}>
-              Generate
-            </Link>
-            <Link href="/decks" className={s.link}>
-              My Decks
-            </Link>
-            <Link href="/challenge" className={s.link}>
-              Challenge
-            </Link>
-            <Link href="/shared" className={s.link}>
-              Public
-            </Link>
+              <Link href="/" className={s.link}>
+                Home
+              </Link>
+              <Link href="/generate" className={s.link}>
+                Generate
+              </Link>
+              <Link href="/decks" className={s.link}>
+                My Decks
+              </Link>
+              <Link href="/challenge" className={s.link}>
+                Challenge
+              </Link>
+              <Link href="/shared" className={s.link}>
+                Public
+              </Link>
             </>
           )}
         </nav>
       </div>
-      <div className="flex justify-end space-x-8">
+      <div className="flex items-center justify-center">
         {user ? (
-            <User />
+          <User />
         ) : (
-          <Link href="/signin" className={s.link}>
+          <Link
+            href="/signin"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded hover:bg-indigo-700 transition-colors duration-200"
+          >
             Sign In
           </Link>
         )}

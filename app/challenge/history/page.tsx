@@ -62,7 +62,7 @@ export default function ChallengeHistory() {
                         <div key={history.id} className="mb-6">
                             <h2 className="text-xl font-semibold mb-2">Attempt #{history.attempt_number}</h2>
                             <p className="mb-1">Deck Name: {history.deck_name}</p>
-                            <p className="mb-1">Accuracy: {(history.accuracy || 0) * 100}%</p>
+                            <p className="mb-1">Accuracy: {((history.accuracy || 0) * 100).toFixed(2)}%</p>
                             <p className="mb-1">Correct Answers: {history.correct}</p>
                             <p className="mb-1">Incorrect Answers: {history.incorrect}</p>
                             <p className="mb-1">Time Taken: {history.time_taken} seconds</p>

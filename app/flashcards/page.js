@@ -4,6 +4,7 @@ import { Divider, Grid, Container, Box, Button, TextField, Typography, Dialog, D
 import { useRouter } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import CardComponent from '@/components/ui/Card';
+import FlashcardDisplay from '@/components/ui/FlashcardDisplay';
 import Modal from '@/components/ui/Modal';
 import { v4 as uuidv4 } from 'uuid';
 import Spinner from '@/components/ui/Spinner/spinner.tsx';
@@ -209,13 +210,13 @@ export default function Flashcards(){
         }
     }
     return (
-        <div>
+        <div style={{marginTop:"14vh"}}>
             <Container sx={{marginBottom: 5}}>
                 <Typography variant="h4" textAlign="center" sx={{margin:"16px"}}>{name}</Typography>
-                
                 <Box sx={{ width: '50%', margin: '0 auto' }}>
                         <Divider sx={{ backgroundColor: 'white', height: '2px', marginBottom: 5 }} />
                 </Box>
+                <FlashcardDisplay flashcard={flashcards}/>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '16px' }}>
                     <div style={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <input

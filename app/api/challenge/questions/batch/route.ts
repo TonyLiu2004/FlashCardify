@@ -5,15 +5,34 @@ export async function POST(request: Request) {
     try {
         const body = await request.json();
         const { questions } = body;
+        const challengeType = request.headers.get('Challenge-Type') || 'standard';
+
         if (!Array.isArray(questions) || questions.length === 0) {
             return NextResponse.json({ error: 'Invalid questions data' }, { status: 400 });
         }
 
-        // Track errors for individual questions
+        let processedQuestions = questions.map((question: any) => {
+            return {
+                ...question,
+                choice_a: question.choice_a || 'NA',
+                choice_b: question.choice_b || 'NA',
+                choice_c: question.choice_c || 'NA',
+                choice_d: question.choice_d || 'NA',
+            };
+        });
+
+        //future processing of other challenge types
+        switch (challengeType) {
+            case 'standard':
+                break;
+            default:
+                break;
+        }
+
         const errorMessages: string[] = [];
 
         await Promise.all(
-            questions.map(async (question) => {
+            processedQuestions.map(async (question) => {
                 try {
                     await upsertQuestionRecord(question);
                 } catch (error: any) {
