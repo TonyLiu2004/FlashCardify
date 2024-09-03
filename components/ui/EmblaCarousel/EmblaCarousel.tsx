@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { EmblaOptionsType } from 'embla-carousel'
 import {
   PrevButton,
@@ -50,11 +50,18 @@ const flashcardDisplaysx = {
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options)
-  const [flipped, setFlipped] = useState(false)
+  const [flipped, setFlipped] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    setFlipped(new Array(slides.length).fill(false));
+  }, [slides.length]);
   
-  const handleCardClick = () => {
-      setFlipped(!flipped);
-  }
+  const handleCardClick = (index: number) => {
+    setFlipped((prev) => ({
+        ...prev,
+        [index]: !prev[index]
+    }))
+  };
 
   const {
     prevBtnDisabled,
@@ -85,7 +92,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                   <CardActionArea
                     key={index}
                     onClick={() => {
-                      handleCardClick();
+                      handleCardClick(index);
                     }}
                     disableRipple
                     sx={{
@@ -117,8 +124,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 width: "100%",
                                 height: "23rem",
                                 borderRadius:"1.8rem",
-                                transform: flipped ? 'rotateX(180deg)' : 'rotateX(0deg)',
-                                background: flipped ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
+                                transform: flipped[index] ? 'rotateX(180deg)' : 'rotateX(0deg)',
+                                background: flipped[index] ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
                             },
                             '& > div > div': {
                                 position: 'absolute',
@@ -131,7 +138,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 boxSizing: 'border-box',
                                 overflow: 'auto',
                                 borderRadius:"1.8rem",
-                                background: flipped ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
+                                background: flipped[index] ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
                             },
                             '& > div > div:nth-of-type(2)': {
                                 transform: 'rotateX(180deg)',
