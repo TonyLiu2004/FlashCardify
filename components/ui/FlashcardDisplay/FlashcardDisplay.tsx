@@ -24,7 +24,7 @@ const SLIDE_COUNT = 5
 const FlashcardDisplay: React.FC<FlashcardProps> = ({ flashcard }) => {
     const [flashcards, setFlashcards] = useState<Flashcard[]>(flashcard);
     const [loading, setLoading] = useState(false);
-
+    
     useEffect(() => {
         const fetchFlashcards = async () => {
             setLoading(true);
@@ -37,17 +37,7 @@ const FlashcardDisplay: React.FC<FlashcardProps> = ({ flashcard }) => {
     
     return(
         <div>
-            {/* {loading ? (
-                <>Loading...</> 
-            ) : (
-                flashcards.length > 0 ? (
-                    <>{flashcards[0].front_text}</> 
-                ) : (
-                    <>No flashcards available</>  
-                )
-            )} */}
-            <EmblaCarousel slides={flashcards} options={OPTIONS} />
-            
+            <EmblaCarousel slides={flashcards} options={OPTIONS} />  
         </div>
     );
 }
