@@ -58,7 +58,7 @@ export default async function SignIn({
     <div className="flex justify-center height-screen-helper">
       <div className="flex flex-col justify-between max-w-lg p-3 m-auto w-80 ">
         <div className="flex justify-center pb-12 ">
-          <Logo width="64px" height="64px" />
+          <img src="/new_logo.png" className="size-32" alt="FlashCardify Logo" />
         </div>
         <Card
           title={
