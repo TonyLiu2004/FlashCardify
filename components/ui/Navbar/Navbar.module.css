@@ -1,21 +1,21 @@
 .root {
-  @apply sticky top-0 bg-black z-40 transition-all duration-150 h-16 md:h-20;
+  @apply sticky top-0 bg-navBackground z-40 transition-all duration-150 h-16 md:h-20;
 }
 
 .link {
-  @apply inline-flex items-center leading-6 font-bold transition ease-in-out duration-75 cursor-pointer text-zinc-200 rounded-md p-1;
+  @apply inline-flex items-center leading-6 font-bold transition ease-in-out duration-75 cursor-pointer text-textColor rounded-md p-1;
   font-family: 'Mark Pro', Arial, sans-serif;
   padding: 8px 16px;
 }
 
 .link:hover {
-  @apply text-zinc-100;
-  background-color:rgba(102, 107, 111, 0.433);
+  @apply text-textColor;
+  background-color: rgba(102, 107, 111, 0.433);
   border-radius: 8px;
 }
 
 .link:focus {
-  @apply outline-none text-zinc-100 ring-2 ring-gray-500 ring-opacity-50;
+  @apply outline-none text-textColor ring-2 ring-gray-500 ring-opacity-50;
 }
 
 .logo {

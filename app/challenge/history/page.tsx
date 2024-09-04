@@ -54,10 +54,10 @@ export default function ChallengeHistory() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center bg-zinc-800 text-white p-4" style={{marginTop: "80px"}}>
+        <div className="min-h-screen flex flex-col items-center bg-primaryBackground text-textColor p-4" style={{marginTop: "80px"}}>
             <h1 className="text-3xl font-bold mb-6 mt-4">Challenge History</h1>
             {challengeHistories.length > 0 ? (
-                <div className="w-full max-w-4xl bg-black rounded-lg shadow-lg p-6">
+                <div className="w-full max-w-4xl bg-secondaryBackground rounded-lg shadow-lg p-6">
                     {challengeHistories.map((history, index) => (
                         <div key={history.id} className="mb-6">
                             <h2 className="text-xl font-semibold mb-2">Attempt #{history.attempt_number}</h2>
