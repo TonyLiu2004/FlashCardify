@@ -318,7 +318,7 @@ export default function Generate() {
               <div
                 style={{
                   // border: `${toSave[index] ? '#718e4d' : '#3a6b8a'}`,
-                  border: `${toSave[index] ? '3px solid #0011ff' : 'none'}`
+                  border: `${toSave[index] ? '3px solid #FAFAFA' : 'none'}`
                 }}
               >
                 <div>
@@ -542,7 +542,13 @@ export default function Generate() {
             </Typography>
           )}
         </Box>
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            sx: { backgroundColor: '#e7e6e3' }
+          }}
+        >
           <DialogTitle>Save Flashcards</DialogTitle>
           <DialogContent>
             {deckSaving ? (
@@ -577,6 +583,26 @@ export default function Generate() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   variant="outlined"
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: '#4A4A4A', // Static border color
+                        borderRadius: '10px' // Border radius
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#4A4A4A', // Border color on hover
+                        borderRadius: '10px' // Consistent border radius on hover
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#4A4A4A', // Border color when the field is focused
+                        borderRadius: '10px' // Consistent border radius when focused
+                      }
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: '#4A4A4A', // Label color, can be adjusted if needed
+                      borderRadius: '10px' // Label doesn't actually use borderRadius, remove if unnecessary
+                    }
+                  }}
                 />
                 <TextField
                   autoFocus
@@ -589,6 +615,26 @@ export default function Generate() {
                   onChange={(e) => setDescription(e.target.value)}
                   multiline
                   rows={4}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: '#4A4A4A', // Static border color
+                        borderRadius: '10px' // Border radius
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#4A4A4A', // Border color on hover
+                        borderRadius: '10px' // Consistent border radius on hover
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#4A4A4A', // Border color when the field is focused
+                        borderRadius: '10px' // Consistent border radius when focused
+                      }
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: '#4A4A4A', // Label color, can be adjusted if needed
+                      borderRadius: '10px' // Label doesn't actually use borderRadius, remove if unnecessary
+                    }
+                  }}
                 />
               </Box>
             )}
@@ -596,11 +642,19 @@ export default function Generate() {
           <DialogActions
             sx={{ display: 'flex', justifyContent: 'space-between' }}
           >
-            <Button onClick={handleSetDeckSaving}>
+            <Button
+              onClick={handleSetDeckSaving}
+              sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
+            >
               {deckSaving ? 'New Deck' : 'Save to Existing Deck'}
             </Button>
             <Box>
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button
+                onClick={handleClose}
+                sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
+              >
+                Cancel
+              </Button>
               <Button
                 onClick={() => {
                   setOpen(false);
@@ -610,6 +664,7 @@ export default function Generate() {
                     saveFlashCards();
                   }
                 }}
+                sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
               >
                 Save
               </Button>
