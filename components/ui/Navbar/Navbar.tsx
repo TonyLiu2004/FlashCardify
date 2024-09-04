@@ -11,7 +11,7 @@ export default async function Navbar() {
 
   return (
     <nav className={s.root} style={{
-      height:"8vh",
+      height:"12vh",
       position: "fixed", 
       top: 0, 
       left: 0, 
