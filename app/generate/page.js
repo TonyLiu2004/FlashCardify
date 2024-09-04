@@ -586,21 +586,21 @@ export default function Generate() {
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       '& fieldset': {
-                        borderColor: '#4A4A4A', // Static border color
-                        borderRadius: '10px' // Border radius
+                        borderColor: '#4A4A4A',
+                        borderRadius: '10px'
                       },
                       '&:hover fieldset': {
-                        borderColor: '#4A4A4A', // Border color on hover
-                        borderRadius: '10px' // Consistent border radius on hover
+                        borderColor: '#4A4A4A',
+                        borderRadius: '10px'
                       },
                       '&.Mui-focused fieldset': {
-                        borderColor: '#4A4A4A', // Border color when the field is focused
-                        borderRadius: '10px' // Consistent border radius when focused
+                        borderColor: '#4A4A4A',
+                        borderRadius: '10px'
                       }
                     },
                     '& .MuiInputLabel-root': {
-                      color: '#4A4A4A', // Label color, can be adjusted if needed
-                      borderRadius: '10px' // Label doesn't actually use borderRadius, remove if unnecessary
+                      color: '#4A4A4A',
+                      borderRadius: '10px'
                     }
                   }}
                 />
@@ -618,21 +618,21 @@ export default function Generate() {
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       '& fieldset': {
-                        borderColor: '#4A4A4A', // Static border color
-                        borderRadius: '10px' // Border radius
+                        borderColor: '#4A4A4A',
+                        borderRadius: '10px'
                       },
                       '&:hover fieldset': {
-                        borderColor: '#4A4A4A', // Border color on hover
-                        borderRadius: '10px' // Consistent border radius on hover
+                        borderColor: '#4A4A4A',
+                        borderRadius: '10px'
                       },
                       '&.Mui-focused fieldset': {
-                        borderColor: '#4A4A4A', // Border color when the field is focused
-                        borderRadius: '10px' // Consistent border radius when focused
+                        borderColor: '#4A4A4A',
+                        borderRadius: '10px'
                       }
                     },
                     '& .MuiInputLabel-root': {
-                      color: '#4A4A4A', // Label color, can be adjusted if needed
-                      borderRadius: '10px' // Label doesn't actually use borderRadius, remove if unnecessary
+                      color: '#4A4A4A',
+                      borderRadius: '10px'
                     }
                   }}
                 />
