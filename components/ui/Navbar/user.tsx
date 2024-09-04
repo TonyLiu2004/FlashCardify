@@ -63,7 +63,7 @@ export function User() {
             width={100}
             height={100}
             alt="Avatar"
-            className="overflow-hidden rounded-full"
+            className="overflow-hidden rounded-full mt-10"
           />
         </Button>
       </DropdownMenuTrigger>

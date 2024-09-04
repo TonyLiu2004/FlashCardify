@@ -15,8 +15,8 @@ const ContactPage: React.FC = () => {
     };
 
     return (
-        <div className="max-w-lg mx-auto my-20 p-8 bg-black shadow-md rounded-lg">
-        <h1 className="text-2xl font-semibold text-center mb-6">Help us help you better!</h1>
+        <div className="max-w-lg mx-auto my-40 p-8 bg-black shadow-md rounded-lg">
+        <h1 className="text-4xl font-semibold text-center mb-6">Help us help you better!</h1>
         <p className="text-center text-white">Have ideas to make FlashCardify even better? Share your thoughts with us below, and we'll get back to you shortly!</p>
         <form onSubmit={handleSubmit} className="space-y-4 my-10">
             <div>
