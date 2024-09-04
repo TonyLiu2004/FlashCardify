@@ -125,7 +125,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 height: "23rem",
                                 borderRadius:"1.8rem",
                                 transform: flipped[index] ? 'rotateX(180deg)' : 'rotateX(0deg)',
-                                background: flipped[index] ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
+                                background: flipped[index] ? 'linear-gradient(180deg, #B0C4DE, #FAFAFA)'
+                                : 'linear-gradient(180deg, #FAFAFA, #B0C4DE)',
                             },
                             '& > div > div': {
                                 position: 'absolute',
@@ -138,7 +139,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                                 boxSizing: 'border-box',
                                 overflow: 'auto',
                                 borderRadius:"1.8rem",
-                                background: flipped[index] ? "linear-gradient(180deg, #4a90e2, #f57c42)" : 'linear-gradient(180deg, #f57c42, #4a90e2)',
+                                background: flipped[index] ? 'linear-gradient(180deg, #FAFAFA, #B0C4DE)'
+                                : 'linear-gradient(180deg, #B0C4DE, #FAFAFA)',
                             },
                             '& > div > div:nth-of-type(2)': {
                                 transform: 'rotateX(180deg)',

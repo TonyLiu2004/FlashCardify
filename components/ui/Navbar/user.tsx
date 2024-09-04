@@ -67,7 +67,7 @@ export function User() {
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className='bg-black'>
+      <DropdownMenuContent align="end" className='bg-secondaryBackground'>
         {user && (
           <DropdownMenuLabel>{user.user_metadata.full_name}</DropdownMenuLabel>
         )}

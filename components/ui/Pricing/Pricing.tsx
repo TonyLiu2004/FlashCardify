@@ -102,19 +102,26 @@ export default function Pricing({ user, products, subscription }: Props) {
     );
   } else {
     return (
-      <section style={{
-        backgroundColor:"#f0eee8",
-        paddingBottom:"100px"
-      }}>
-        <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8" style={{
-          borderRadius:"32px",
-        }}>
+      <section
+        style={{
+          backgroundColor:
+            'linear-gradient(to bottom, #ffffff 0%, #f0f0f0 70%, #d9d9d9 100%)',
+          paddingBottom: '100px'
+        }}
+      >
+        <div
+          className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8"
+          style={{
+            borderRadius: '32px'
+          }}
+        >
           <div className="sm:flex sm:flex-col sm:align-center">
             <h1 className="text-4xl font-extrabold text-gray-800 sm:text-center sm:text-6xl">
               Pricing Plans
             </h1>
             <p className="max-w-2xl m-auto mt-5 text-xl sm:text-center sm:text-2xl text-gray-800">
-              Start your learning adventure for free. Level up with our premium plans!
+              Start your learning adventure for free. Level up with our premium
+              plans!
             </p>
             {/* <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
               {intervals.includes('month') && (
@@ -169,7 +176,7 @@ export default function Pricing({ user, products, subscription }: Props) {
                     'max-w-xs' // Sets a maximum width to the cards to prevent them from getting too large
                   )}
                   style={{
-                    background:"linear-gradient(180deg, #192230, #074a91)"
+                    background: 'linear-gradient(180deg, #192230, #074a91)'
                   }}
                 >
                   <div className="p-6">

@@ -65,11 +65,13 @@ export default function CustomerPortalForm({ subscription }: Props) {
         </div>
       }
     >
-      <div className="mt-8 mb-4 text-xl font-semibold">
+      <div className="mt-8 mb-4 text-xl font-semibold ">
         {subscription ? (
           `${subscriptionPrice}/${subscription?.prices?.interval}`
         ) : (
-          <Link href="/">Choose your plan</Link>
+          <Link href="/" className="w-1/2 p-3 rounded-md bg-primaryBackground">
+            Choose your plan
+          </Link>
         )}
       </div>
     </Card>
