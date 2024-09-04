@@ -41,7 +41,8 @@ module.exports = {
         textColor: '#4A4A4A', // Charcoal Gray
         buttonBackground: '#B0C4DE', // Misty Blue
         buttonHover: '#91A4BC', // Darker Misty Blue
-        borderColor: '#4A4A4A' // Charcoal Gray for border
+        borderColor: '#4A4A4A', // Charcoal Gray for border
+        navBackground: '#d3d2cf'
       }
     }
   },

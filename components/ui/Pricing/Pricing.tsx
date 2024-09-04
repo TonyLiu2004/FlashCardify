@@ -104,7 +104,8 @@ export default function Pricing({ user, products, subscription }: Props) {
     return (
       <section
         style={{
-          backgroundColor: '#f0eee8',
+          backgroundColor:
+            'linear-gradient(to bottom, #ffffff 0%, #f0f0f0 70%, #d9d9d9 100%)',
           paddingBottom: '100px'
         }}
       >
