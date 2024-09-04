@@ -33,6 +33,7 @@ interface CardProps {
   created_at: string;
   onEdit: (id: string, name: string, description: string) => void;
   onDelete: (flashcard: object) => void;
+  own?: boolean;
 }
 
 const flashcardsx = {
@@ -50,7 +51,8 @@ const Card: React.FC<CardProps> = ({
   front_text,
   back_text,
   onEdit,
-  onDelete
+  onDelete,
+  own
 }) => {
   const [flipped, setFlipped] = useState(false);
   const [activeIndex, setActiveIndex] = useState(false);
@@ -88,10 +90,12 @@ const Card: React.FC<CardProps> = ({
         backgroundColor: '#FAFAFA',
         position: 'relative',
         width: '100%',
-        height: 'auto'
+        height: 'auto',
+        borderRadius: '8px',
+        overflow: 'hidden'
       }}
     >
-      <div
+      {own && <div
         className="absolute top-2 right-2 flex items-center space-x-2"
         style={{ zIndex: 1 }}
       >
@@ -141,7 +145,7 @@ const Card: React.FC<CardProps> = ({
             </DropdownMenuContent>
           </DropdownMenu>
         )}
-      </div>
+      </div>}
 
       <CardActionArea
         disableRipple
@@ -163,7 +167,7 @@ const Card: React.FC<CardProps> = ({
         <CardContent
           sx={{
             borderRadius: '8px',
-            padding: 0
+            padding: 0,
           }}
         >
           <Box

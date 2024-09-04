@@ -14,18 +14,16 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { file, fileType } = body;
 
-    console.log("File Type:", fileType);
-
-    // Decode base64 file content
+    //console.log("File Type:", fileType);
     const fileBuffer = Buffer.from(file, 'base64');
 
     if (fileType === 'application/pdf') {
-      console.log("Processing PDF...");
+      //console.log("Processing PDF...");
       const pdfData = await pdf(fileBuffer);
-      console.log("Extracted PDF Text (before cleaning):", pdfData.text);
+      //console.log("Extracted PDF Text (before cleaning):", pdfData.text);
 
       const cleanedText = cleanText(pdfData.text);
-      console.log("Cleaned PDF Text:", cleanedText);
+      //console.log("Cleaned PDF Text:", cleanedText);
 
       return NextResponse.json({ message: "PDF processed successfully", extractedText: cleanedText }, { status: 200 });
     } else {

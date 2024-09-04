@@ -267,6 +267,7 @@ export default function Flashcards(){
                                         back_text={flashcard.back_text}
                                         onEdit={handleEdit}
                                         onDelete={openDeleteModal}
+                                        own={true}
                                     />
                                 </Grid>
                             ))}

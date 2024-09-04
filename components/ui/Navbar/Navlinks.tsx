@@ -40,6 +40,9 @@ export default function Navlinks({ user }: NavlinksProps) {
               <Link href="/shared" className={s.link}>
                 Public
               </Link>
+              <Link href="/upload" className={s.link}>
+                Upload
+              </Link>
             </>
           )}
         </nav>

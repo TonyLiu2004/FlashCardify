@@ -19,7 +19,6 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
-  Divider
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';

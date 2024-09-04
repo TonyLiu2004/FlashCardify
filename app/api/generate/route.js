@@ -8,8 +8,8 @@ export async function POST(req) {
         const supabase = createClient();
 
         const user = await getUser(supabase);
-        const subscription = await getSubscription(supabase);
-        const defaultFlashcards = 5;
+        const subscription = await getSubscription(supabase, user.id);
+        const defaultFlashcards = 10;
 
         let numFlashcards = defaultFlashcards;
         if (subscription && subscription.status === 'active') {
