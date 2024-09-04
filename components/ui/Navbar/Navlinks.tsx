@@ -18,37 +18,38 @@ export default function Navlinks({ user }: NavlinksProps) {
 
   return (
     <div className="relative flex flex-row justify-between py-4 align-center md:py-5" style={{
-      width:"90vw",
+      width: "90vw",
+      marginTop: "-30px",
     }}>
       <div className="flex items-center flex-1">
         <Link href="/" className={s.logo} aria-label="Logo">
           <Logo />
         </Link>
-        <nav className="ml-6 space-x-4 lg:block" style={{fontSize:"17px"}} >
+        <nav className="ml-6 space-x-4 lg:block" style={{ fontSize: "17px" }}>
           {user && (
             <>
-            <Link href="/" className={s.link}>
-              Home
-            </Link>
-            <Link href="/generate" className={s.link}>
-              Generate
-            </Link>
-            <Link href="/decks" className={s.link}>
-              My Decks
-            </Link>
-            <Link href="/challenge" className={s.link}>
-              Challenge
-            </Link>
-            <Link href="/shared" className={s.link}>
-              Public
-            </Link>
+              <Link href="/" className={s.link}>
+                Home
+              </Link>
+              <Link href="/generate" className={s.link}>
+                Generate
+              </Link>
+              <Link href="/decks" className={s.link}>
+                My Decks
+              </Link>
+              <Link href="/challenge" className={s.link}>
+                Challenge
+              </Link>
+              <Link href="/shared" className={s.link}>
+                Public
+              </Link>
             </>
           )}
         </nav>
       </div>
       <div className="flex justify-end space-x-8">
         {user ? (
-            <User />
+          <User />
         ) : (
           <Link href="/signin" className={s.link}>
             Sign In
