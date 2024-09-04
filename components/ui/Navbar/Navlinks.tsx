@@ -23,7 +23,7 @@ export default function Navlinks({ user }: NavlinksProps) {
     }}>
       <div className="flex items-center flex-1">
         <Link href="/" className={s.logo} aria-label="Logo">
-          <Logo />
+          <img src="/new_logo.png" className="size-24" alt="FlashCardify Logo" />
         </Link>
         <nav className="ml-6 space-x-4 lg:block" style={{ fontSize: "17px" }}>
           {user && (
