@@ -18,7 +18,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  DialogContentText,
+  DialogContentText
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
@@ -45,10 +45,11 @@ export default function Generate() {
 
   const router = useRouter();
   const flashcardsPreviewRef = useRef(null);
-
-  // Debounced API call for generating flashcards
   const debouncedGenerateFlashcards = useCallback(
     debounce(async (text) => {
+      if (!text.trim()) {
+        return;
+      }
       try {
         setIsCardsLoading(true);
         setFlashcards([]);
@@ -60,6 +61,7 @@ export default function Generate() {
         setFlashcards(data);
         setToSave(data.map(() => false));
         scrollToFlashcards();
+        setText('');
       } catch (error) {
         console.error('Error generating flashcards:', error);
       } finally {
@@ -72,14 +74,12 @@ export default function Generate() {
   useEffect(() => {
     const fetchUserDataAndDecks = async () => {
       try {
-        // First, fetch user data
         const userResponse = await fetch('/api/user');
 
         if (userResponse.ok) {
           const userData = await userResponse.json();
           setUser(userData);
 
-          // After the user data is fetched successfully, fetch the decks
           const deckResponse = await fetch(`/api/deck?user_id=${userData.id}`);
 
           if (deckResponse.ok) {
@@ -103,6 +103,10 @@ export default function Generate() {
   }, [router]);
 
   const handleSubmit = () => {
+    if (!text.trim()) {
+      alert('Please enter text to generate flashcards.');
+      return;
+    }
     debouncedGenerateFlashcards(text);
   };
 
@@ -266,7 +270,7 @@ export default function Generate() {
             background: 'none',
             transition: 'transform 0.2s ease',
             '&:hover': {
-              transform: 'scale(1.04)' // Scale up the card on hover
+              transform: 'scale(1.04)'
             }
           }}
         >
@@ -430,7 +434,7 @@ export default function Generate() {
               }}
               onClick={handleSubmit}
               fullWidth
-              disabled={isCardsLoading}
+              disabled={isCardsLoading || !text}
             >
               Generate
             </Button>
