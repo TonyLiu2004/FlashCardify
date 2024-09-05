@@ -416,9 +416,9 @@ export default function UploadPage() {
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4 mt-20">
-            <div className="max-w-7xl w-full flex space-x-8">
+            <div className="w-full max-w-7xl flex flex-col lg:flex-row lg:space-x-8 space-y-8 lg:space-y-0">
                 {/* Preview Section */}
-                <div className="w-3/4 bg-white rounded-lg shadow-md p-6 border">
+                <div className="w-full lg:w-3/4 bg-white rounded-lg shadow-md p-6 border">
                     <h2 className="text-lg font-semibold text-gray-700 mb-4">File Preview</h2>
                     {filePreviews.length > 0 ? (
                         filePreviews.map((previewUrl, index) => (
@@ -426,11 +426,9 @@ export default function UploadPage() {
                                 {uploadedFiles[index].type === 'application/pdf' && (
                                     <iframe src={previewUrl} className="w-full h-96 border rounded" />
                                 )}
-
                                 {uploadedFiles[index].type.startsWith('image/') && (
                                     <img src={previewUrl} alt="Preview" className="w-full h-96 object-contain border rounded" />
                                 )}
-
                                 {uploadedFiles[index].type === 'text/plain' && (
                                     <pre className="w-full h-96 overflow-auto p-4 bg-gray-200 border rounded">{previewUrl}</pre>
                                 )}
@@ -442,20 +440,20 @@ export default function UploadPage() {
                 </div>
 
                 {/* Controls Section */}
-                <div className="w-1/4 bg-white rounded-lg shadow-md p-6 border">
+                <div className="w-full lg:w-1/4 bg-white rounded-lg shadow-md p-6 border">
                     <div
                         {...getRootProps()}
-                        className="border-2 border-dashed border-gray-300 p-10 rounded-lg cursor-pointer hover:border-blue-500 transition"
+                        className="border-2 border-dashed border-gray-300 p-4 lg:p-10 rounded-lg cursor-pointer hover:border-blue-500 transition"
                     >
                         <input {...getInputProps()} />
-                        <p className="text-gray-500 text-center">Drag & drop some files here, or click to select files</p>
-                        <p className="text-sm text-center text-gray-400">Supported formats: .docx, .pdf, .txt. Max file size: 10MB</p>
+                        <p className="text-gray-500 text-center text-sm lg:text-base">Drag & drop files here, or click to select</p>
+                        <p className="text-xs lg:text-sm text-center text-gray-400 mt-2">Supported: .docx, .pdf, .txt. Max: 10MB</p>
                     </div>
 
                     {uploadedFiles.length > 0 && (
                         <div className="mt-6">
                             <h2 className="text-lg font-semibold text-gray-700 mb-4">Uploaded Files:</h2>
-                            <ul className="list-disc list-inside text-gray-600">
+                            <ul className="list-disc list-inside text-gray-600 text-sm">
                                 {uploadedFiles.map((file, idx) => (
                                     <li key={idx} className="truncate">
                                         {file.name}
@@ -466,51 +464,53 @@ export default function UploadPage() {
                     )}
 
                     {error && (
-                        <div className="mt-4 text-red-500 text-center">
+                        <div className="mt-4 text-red-500 text-center text-sm">
                             <p>{error}</p>
                         </div>
                     )}
 
                     <button
                         onClick={handleCreateFlashcards}
-                        className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full"
+                        className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full text-sm lg:text-base"
                         disabled={uploadedFiles.length === 0 || loading}
                     >
                         {loading ? <LoadingDots /> : 'Create Flashcards'}
                     </button>
 
                     {flashcardsCreated && (
-                        <p className="mt-4 text-green-500 text-center">Flashcards created successfully!</p>
+                        <p className="mt-4 text-green-500 text-center text-sm">Flashcards created successfully!</p>
                     )}
                 </div>
             </div>
-            {flashcards.length > 0 ? (
-                <Grid container spacing={3} mb={4} mt={10} width="1200px">
-                    {memoizedFlashcards}
-                </Grid>
-            ) : (
-                <Typography variant="h6" sx={{ mt: 4, color: 'textColor' }}>
-                    No cards generated yet
-                </Typography>
-            )}
+
             {/* Flashcards Section */}
+            <div className="w-full max-w-7xl mt-10">
+                {flashcards.length > 0 ? (
+                    <Grid container spacing={3} mb={4}>
+                        {memoizedFlashcards}
+                    </Grid>
+                ) : (
+                    <Typography variant="h6" sx={{ mt: 4, color: 'textColor', textAlign: 'center' }}>
+                        No cards generated yet
+                    </Typography>
+                )}
+            </div>
+
+            {/* Action Buttons */}
             {flashcardsCreated && (
-                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{ mt: 4, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2 }}>
                     <Button
                         variant="contained"
                         onClick={handleSaveMode}
                         sx={{
                             fontFamily: 'Roboto, Arial, sans-serif',
-                            fontSize: '1rem',
+                            fontSize: { xs: '0.875rem', sm: '1rem' },
                             fontWeight: 'bold',
-                            margin: 1,
-                            marginBottom: 4,
                             borderRadius: '8px',
                             color: '#4A4A4A',
-                            backgroundColor: `${saveMode ? '#B0AFAF' : '#D1CDCD'}`,
-                            transition: 'background-color 0.3s ease',
+                            backgroundColor: (theme) => saveMode ? theme.palette.grey[400] : theme.palette.grey[300],
                             '&:hover': {
-                                backgroundColor: `${saveMode ? '#908E8E' : '#BEBBBB'}`
+                                backgroundColor: (theme) => saveMode ? theme.palette.grey[500] : theme.palette.grey[400]
                             }
                         }}
                     >
@@ -521,15 +521,13 @@ export default function UploadPage() {
                         onClick={handleSelectAll}
                         sx={{
                             fontFamily: 'Roboto, Arial, sans-serif',
-                            fontSize: '1rem',
+                            fontSize: { xs: '0.875rem', sm: '1rem' },
                             fontWeight: 'bold',
-                            margin: 1,
-                            marginBottom: 4,
                             borderRadius: '8px',
                             color: '#4A4A4A',
-                            backgroundColor: '#D1CDCD',
+                            backgroundColor: (theme) => theme.palette.grey[300],
                             '&:hover': {
-                                backgroundColor: '#BEBBBB'
+                                backgroundColor: (theme) => theme.palette.grey[400]
                             }
                         }}
                     >
@@ -540,10 +538,8 @@ export default function UploadPage() {
                         onClick={handleOpen}
                         sx={{
                             fontFamily: 'Roboto, Arial, sans-serif',
-                            fontSize: '1rem',
+                            fontSize: { xs: '0.875rem', sm: '1rem' },
                             fontWeight: 'bold',
-                            margin: 1,
-                            marginBottom: 4,
                             borderRadius: '8px',
                             color: '#4A4A4A',
                             backgroundColor: '#B0C4DE',
@@ -558,11 +554,11 @@ export default function UploadPage() {
             )}
 
             {/* Save Flashcards Dialog */}
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Save Flashcards</DialogTitle>
                 <DialogContent>
                     {deckSaving ? (
-                        <FormControl fullWidth>
+                        <FormControl fullWidth margin="normal">
                             <InputLabel>Select Deck</InputLabel>
                             <Select value={selectedDeck} onChange={(e) => setSelectedDeck(e.target.value)}>
                                 {decks.map((deck) => (
@@ -593,22 +589,18 @@ export default function UploadPage() {
                                             borderRadius: '10px'
                                         },
                                         '&:hover fieldset': {
-                                            borderColor: '#4A4A4A',
-                                            borderRadius: '10px'
+                                            borderColor: '#4A4A4A'
                                         },
                                         '&.Mui-focused fieldset': {
-                                            borderColor: '#4A4A4A',
-                                            borderRadius: '10px'
+                                            borderColor: '#4A4A4A'
                                         }
                                     },
                                     '& .MuiInputLabel-root': {
-                                        color: '#4A4A4A',
-                                        borderRadius: '10px'
+                                        color: '#4A4A4A'
                                     }
                                 }}
                             />
                             <TextField
-                                autoFocus
                                 margin="dense"
                                 label="Description (Optional)"
                                 type="text"
@@ -625,26 +617,21 @@ export default function UploadPage() {
                                             borderRadius: '10px'
                                         },
                                         '&:hover fieldset': {
-                                            borderColor: '#4A4A4A',
-                                            borderRadius: '10px'
+                                            borderColor: '#4A4A4A'
                                         },
                                         '&.Mui-focused fieldset': {
-                                            borderColor: '#4A4A4A',
-                                            borderRadius: '10px'
+                                            borderColor: '#4A4A4A'
                                         }
                                     },
                                     '& .MuiInputLabel-root': {
-                                        color: '#4A4A4A',
-                                        borderRadius: '10px'
+                                        color: '#4A4A4A'
                                     }
                                 }}
                             />
                         </Box>
                     )}
                 </DialogContent>
-                <DialogActions
-                    sx={{ display: 'flex', justifyContent: 'space-between' }}
-                >
+                <DialogActions sx={{ display: 'flex', justifyContent: 'space-between', px: 3, pb: 2 }}>
                     <Button
                         onClick={handleSetDeckSaving}
                         sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
@@ -654,7 +641,7 @@ export default function UploadPage() {
                     <Box>
                         <Button
                             onClick={handleClose}
-                            sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
+                            sx={{ color: '#4A4A4A', fontWeight: 'bold', mr: 1 }}
                         >
                             Cancel
                         </Button>
