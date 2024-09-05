@@ -139,14 +139,14 @@ export default function PricingPage() {
           <Typography
             variant='h1'
             style={{
-              margin: '2px',
+              margin: '5px',
               fontFamily: 'cursive',
-              fontSize: 'clamp(5rem, 6vw, 12rem)',
+              fontSize: 'clamp(3.6rem, 6vw, 12rem)',
             }}
           >
             FlashCardify
           </Typography>
-          <Typography variant='h5' style={{ margin: '2px'}}>
+          <Typography variant='h5' style={{ margin: '5px'}}>
             Speed up your learning with intuitive flashcards generated with AI!
           </Typography>
         </Bounce>

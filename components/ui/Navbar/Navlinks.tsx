@@ -67,7 +67,7 @@ export default function Navlinks({ user }: NavlinksProps) {
             Sign In
           </Link>
         )}
-        {isMobile && (
+        {isMobile && user && (
           <button onClick={toggleMenu} className="ml-4 text-3xl focus:outline-none">
             {isOpen ? <FiX /> : <FiMenu />}
           </button>

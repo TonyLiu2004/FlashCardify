@@ -24,7 +24,7 @@ const BackgroundCard: React.FC<FlashcardProps> = ({ x, y }) => {
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
         transform: `rotate(${randomRotation}deg)`,
         zIndex: 1, // Ensure this is behind the text
-        opacity: 0.5, // Adjust the opacity to make it less obtrusive
+        opacity: 0.4, // Adjust the opacity to make it less obtrusive
         animation: `rotate ${Math.random() * 5 + 3}s infinite alternate ease-in-out`,
         overflow: 'hidden', // Ensure content doesn't overflow
         maxWidth: `calc(100vw - ${cardWidth}px)`, // Ensure it doesn't exceed viewport width
