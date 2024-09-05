@@ -146,8 +146,8 @@ export default function PricingPage() {
           >
             FlashCardify
           </Typography>
-          <Typography variant='h5' style={{ margin: '2px' }}>
-            Generate Your Own Flashcards With AI!
+          <Typography variant='h5' style={{ margin: '2px'}}>
+            Speed up your learning with intuitive flashcards generated with AI!
           </Typography>
         </Bounce>
         <Button
