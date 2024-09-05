@@ -152,13 +152,50 @@ export default function ChallengeStart() {
 
   const finishChallenge = async () => {
     setIsFinishing(true);
-    await createChallengeHistoryRecord();
+    const aiSuggestion = await getAIrecommendation();
+    await createChallengeHistoryRecord(aiSuggestion);
     await updateChallengeStatistics();
     setIsChallengeStarted(false);
     router.push('/challenge/history');
   };
 
-  const createChallengeHistoryRecord = async () => {
+  const getAIrecommendation = async (): Promise<string> => {
+    const questionsForAi = questions.map(q => ({
+        question: q.question,
+        userAnswer: q.user_answer,
+        correctAnswer: q[q.answer as keyof Question],
+        isCorrect: q.user_answer === q[q.answer as keyof Question]
+    }));
+    
+
+
+    try {
+        const response = await fetch('/api/challenge/ai-recommendations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                questions: questionsForAi
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const aiRecommendation = await response.json();
+        console.log("AI suggestion is: ", aiRecommendation.suggestion)
+        console.log("Questions for AI: ", questionsForAi)
+        return aiRecommendation.suggestion || "No suggestion available";
+    } catch(error) {
+        console.error('Error:', error);
+        return "Error getting AI recommendation";
+    }
+}
+
+
+  const createChallengeHistoryRecord = async (aiSuggestion: String) => {
     if (!challengeId) return;
 
     const correctAnswers = questions.filter((q) => {
@@ -186,7 +223,7 @@ export default function ChallengeStart() {
           correct: correctAnswers,
           time_taken: timeTaken,
           attempt_number: 1,
-          ai_suggestion: ''
+          ai_suggestion: aiSuggestion
         })
       });
 
