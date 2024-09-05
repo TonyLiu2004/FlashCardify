@@ -7,7 +7,6 @@ import {
   DialogTitle,
   Grid,
   Container,
-  Typography,
   Box,
   TextField,
   Button
@@ -16,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import DeckComponent from '@/components/ui/Deck';
 import Modal from '@/components/ui/Modal';
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from '@/components/ui/Toasts/use-toast';
 
 export default function Decks() {
   const [user, setUser] = useState('');
@@ -77,7 +77,11 @@ export default function Decks() {
 
   const handleSaveDeck = async () => {
     if (newDeckName === '') {
-      alert('Please enter deck name.');
+      toast({
+        title: 'Error',
+        description: "Deck name can't be empty",
+        variant: "destructive",
+    });
       return;
     }
     const uuid = uuidv4();

@@ -16,13 +16,14 @@ import {
     MenuItem,
     Box,
     Typography,
-    Paper,
+    DialogContentText,
     CardActionArea,
     CardContent,
 } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import LoadingDots from '@/components/ui/LoadingDots';
-
+import { useRouter } from 'next/navigation';
+import { toast } from '@/components/ui/Toasts/use-toast';
 
 interface Flashcard {
     id: string;
@@ -40,7 +41,6 @@ export default function UploadPage() {
     const [error, setError] = useState<string | null>(null);
     const [flashcardsCreated, setFlashcardsCreated] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
-    const [deckName, setDeckName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [decks, setDecks] = useState<any[]>([]);
     const [selectedDeck, setSelectedDeck] = useState<string>('');
@@ -50,26 +50,36 @@ export default function UploadPage() {
     const [user, setUser] = useState<any | null>(null);
     const [flipped, setFlipped] = useState<boolean[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [isCardsLoading, setIsCardsLoading] = useState(false);
-
+    const [name, setName] = useState<string>('');
+    const router = useRouter();
     useEffect(() => {
-        const fetchUserDetails = async () => {
+        const fetchUserDataAndDecks = async () => {
             try {
                 const userResponse = await fetch('/api/user');
 
                 if (userResponse.ok) {
                     const userData = await userResponse.json();
                     setUser(userData);
+
+                    const deckResponse = await fetch(`/api/deck?user_id=${userData.id}`);
+
+                    if (deckResponse.ok) {
+                        const deckData = await deckResponse.json();
+                        setDecks(deckData.data);
+                    } else {
+                        setDecks([]);
+                    }
                 } else {
                     setUser(null);
+                    router.push('/signin');
                 }
-            } catch (error: unknown) {
-                setUser(null);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
         };
 
-        fetchUserDetails();
-    }, []);
+        fetchUserDataAndDecks();
+    }, [router]);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFilePreviews([]);
@@ -152,8 +162,8 @@ export default function UploadPage() {
 
                     if (generateResponse.ok) {
                         const data = await generateResponse.json();
-                        setFlashcards(data); // Store flashcards for display
-                        setToSave(data.map(() => false)); // Set save selection state for each flashcard
+                        setFlashcards(data);
+                        setToSave(data.map(() => false));
                         setFlashcardsCreated(true);
                     } else {
                         throw new Error('Error generating flashcards.');
@@ -187,53 +197,88 @@ export default function UploadPage() {
         setToSave(flashcards.map(() => true));
     };
 
-    const handleSaveFlashcards = async (deckId: string) => {
-        const selectedFlashcards = flashcards
-            .filter((_, index) => toSave[index])
-            .map((flashcard) => ({
-                id: uuidv4(),
-                user_id: user.id,
-                front_text: flashcard.front,
-                back_text: flashcard.back,
-                deck_id: deckId,
-                created_at: new Date().toISOString(),
-            }));
-
-        if (selectedFlashcards.length === 0) {
-            alert('Please select the flashcards you want to save.');
+    const saveFlashCards = async () => {
+        if (!name) {
+            toast({
+                title: 'Error',
+                description: "Deck name can't be empty",
+                variant: "destructive",
+            });
             return;
         }
+        const countTrueValues = Object.values(toSave).filter(
+            (value) => value
+        ).length;
+        if (countTrueValues === 0) {
+            toast({
+                title: 'Error',
+                description: "Select the flashcards you want to save",
+                variant: "destructive",
+            });
+            setOpen(false);
+            return;
+        }
+
+        const uuid = uuidv4();
+        setOpen(false);
+        await handleSaveDeck(uuid);
+        await handleSaveFlashCards(uuid);
+        router.push('/decks');
+    };
+
+    const handleSaveFlashCards = async (uuid: any) => {
+        const flashcardDataArray = flashcards.map((flashcard, index) => ({
+            id: flashcard.id || uuidv4(),
+            user_id: user.id,
+            deck_id: uuid,
+            front_text: flashcard.front,
+            back_text: flashcard.back,
+            created_at: new Date().toISOString()
+        }));
+
+        const selectedFlashcards = flashcardDataArray.filter(
+            (_, index) => toSave[index]
+        );
 
         try {
             const response = await fetch('/api/flashcard/batch', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ flashcards: selectedFlashcards, userId: user.id }),
-
+                body: JSON.stringify({
+                    flashcards: selectedFlashcards,
+                    userId: user.id
+                })
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error(`Error: ${errorData.message}`);
-            } else {
-                setOpen(false);
-                setFlashcards([]);
-                setFlashcardsCreated(false);
-                alert('Flashcards saved successfully!');
             }
         } catch (error) {
             console.error('Error saving flashcards:', error);
         }
     };
 
-    const handleSaveToNewDeck = async () => {
-        const deckId = uuidv4();
+    const saveToExistingDeck = async () => {
+        if (!selectedDeck) {
+            toast({
+                title: 'Error',
+                description: "Select a deck",
+                variant: "destructive",
+            });
+            return;
+        }
+        await handleSaveFlashCards(selectedDeck);
+        router.push('/decks');
+    };
+
+    const handleSaveDeck = async (uuid: any) => {
         const deckData = {
-            id: deckId,
+            id: uuid,
             user_id: user.id,
-            name: deckName,
+            name: name,
             description: description,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
@@ -243,18 +288,15 @@ export default function UploadPage() {
             const response = await fetch('/api/deck', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ deck: deckData }),
+                body: JSON.stringify({ deck: deckData })
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error(`Error: ${errorData.message}`);
-                return;
             }
-
-            await handleSaveFlashcards(deckId);
         } catch (error) {
             console.error('Error saving deck:', error);
         }
@@ -371,6 +413,7 @@ export default function UploadPage() {
         ));
     }, [flashcards, activeIndex, saveMode, toSave, flipped]);
 
+
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4 mt-20">
             <div className="max-w-7xl w-full flex space-x-8">
@@ -452,7 +495,7 @@ export default function UploadPage() {
             )}
             {/* Flashcards Section */}
             {flashcardsCreated && (
-                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center'}}>
+                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
                     <Button
                         variant="contained"
                         onClick={handleSaveMode}
@@ -531,41 +574,104 @@ export default function UploadPage() {
                         </FormControl>
                     ) : (
                         <Box>
+                            <DialogContentText>
+                                Please enter a name for your flashcard collection
+                            </DialogContentText>
                             <TextField
-                                label="Deck Name"
-                                fullWidth
+                                autoFocus
                                 margin="dense"
-                                value={deckName}
-                                onChange={(e) => setDeckName(e.target.value)}
+                                label="Collection Name"
+                                type="text"
+                                fullWidth
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                variant="outlined"
+                                sx={{
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: '#4A4A4A',
+                                            borderRadius: '10px'
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: '#4A4A4A',
+                                            borderRadius: '10px'
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: '#4A4A4A',
+                                            borderRadius: '10px'
+                                        }
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        color: '#4A4A4A',
+                                        borderRadius: '10px'
+                                    }
+                                }}
                             />
                             <TextField
-                                label="Description (Optional)"
-                                fullWidth
-                                multiline
-                                rows={3}
+                                autoFocus
                                 margin="dense"
+                                label="Description (Optional)"
+                                type="text"
+                                fullWidth
+                                variant="outlined"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
+                                multiline
+                                rows={4}
+                                sx={{
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: '#4A4A4A',
+                                            borderRadius: '10px'
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: '#4A4A4A',
+                                            borderRadius: '10px'
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: '#4A4A4A',
+                                            borderRadius: '10px'
+                                        }
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        color: '#4A4A4A',
+                                        borderRadius: '10px'
+                                    }
+                                }}
                             />
                         </Box>
                     )}
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleSetDeckSaving}>
+                <DialogActions
+                    sx={{ display: 'flex', justifyContent: 'space-between' }}
+                >
+                    <Button
+                        onClick={handleSetDeckSaving}
+                        sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
+                    >
                         {deckSaving ? 'New Deck' : 'Save to Existing Deck'}
                     </Button>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button
-                        onClick={() => {
-                            if (deckSaving) {
-                                handleSaveFlashcards(selectedDeck);
-                            } else {
-                                handleSaveToNewDeck();
-                            }
-                        }}
-                    >
-                        Save
-                    </Button>
+                    <Box>
+                        <Button
+                            onClick={handleClose}
+                            sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setOpen(false);
+                                if (deckSaving) {
+                                    saveToExistingDeck();
+                                } else {
+                                    saveFlashCards();
+                                }
+                            }}
+                            sx={{ color: '#4A4A4A', fontWeight: 'bold' }}
+                        >
+                            Save
+                        </Button>
+                    </Box>
                 </DialogActions>
             </Dialog>
         </div>

@@ -8,6 +8,7 @@ import FlashcardDisplay from '@/components/ui/FlashcardDisplay';
 import Modal from '@/components/ui/Modal';
 import { v4 as uuidv4 } from 'uuid';
 import Spinner from '@/components/ui/Spinner/spinner.tsx';
+import { toast } from "@/components/ui/Toasts/use-toast"
 
 export default function Flashcards(){
     const [user, setUser] = useState("")
@@ -172,7 +173,11 @@ export default function Flashcards(){
 
     const handleSaveCard = async () => {
         if(newCardFront === "" || newCardBack == ""){
-            alert("Please enter flashcard text.")
+            toast({
+                title: 'Error',
+                description: "Enter flashcard text",
+                variant: "destructive",
+            });
             return
         }
 

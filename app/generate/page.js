@@ -25,6 +25,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Spinner from '@/components/ui/Spinner/spinner.tsx';
 import debounce from 'lodash/debounce';
+import { toast } from '@/components/ui/Toasts/use-toast';
 
 export default function Generate() {
   const [flashcards, setFlashcards] = useState([]);
@@ -104,7 +105,11 @@ export default function Generate() {
 
   const handleSubmit = () => {
     if (!text.trim()) {
-      alert('Please enter text to generate flashcards.');
+      toast({
+        title: 'Error',
+        description: "Enter text to generate flashcards",
+        variant: "destructive",
+    });
       return;
     }
     debouncedGenerateFlashcards(text);
@@ -175,7 +180,11 @@ export default function Generate() {
 
   const saveFlashCards = async () => {
     if (!name) {
-      alert('Please enter a name');
+      toast({
+        title: 'Error',
+        description: "Deck name can't be empty",
+        variant: "destructive",
+    });
       return;
     }
 
@@ -183,7 +192,11 @@ export default function Generate() {
       (value) => value
     ).length;
     if (countTrueValues === 0) {
-      alert('Please select the flashcards you want to save.');
+      toast({
+        title: 'Error',
+        description: "Select flashcards you want to save",
+        variant: "destructive",
+    });
       setOpen(false);
       return;
     }
@@ -232,7 +245,11 @@ export default function Generate() {
 
   const saveToExistingDeck = async () => {
     if (!selectedDeck) {
-      alert('Please select a deck.');
+      toast({
+        title: 'Error',
+        description: "Select a deck",
+        variant: "destructive",
+    });
       return;
     }
     await handleSaveFlashCards(selectedDeck);
