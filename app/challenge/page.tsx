@@ -227,8 +227,8 @@ export default function ChallengePage() {
         </div>
         {message && <p className="text-red-500 text-center mb-4">{message}</p>}
         <button
+          className='btn'
           onClick={handleStartChallenge}
-          className="w-full p-2 bg-buttonBackground rounded hover:bg-accent transition"
           disabled={isStarting}
         >
           {isStarting ? <LoadingDots /> : 'Start Challenge'}

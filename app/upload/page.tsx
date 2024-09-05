@@ -473,7 +473,7 @@ export default function UploadPage() {
 
                     <button
                         onClick={handleCreateFlashcards}
-                        className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full"
+                        className='btn mt-5'
                         disabled={uploadedFiles.length === 0 || loading}
                     >
                         {loading ? <LoadingDots /> : 'Create Flashcards'}
