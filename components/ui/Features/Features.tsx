@@ -7,7 +7,6 @@ import pencil from '@/public/pencil.gif';
 import book from '@/public/book.gif';
 import plane from '@/public/paper-plane.gif';
 import shelves from '@/public/shelves.gif';
-import Image from 'next/image';
 
 //add 3 more feature boxes with filler text
 
