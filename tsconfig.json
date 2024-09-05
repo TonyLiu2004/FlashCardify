@@ -24,6 +24,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "utils/stripe/client.js", "app/api/generate/route.jsx", "app/api/generate/route.jsx", "app/generate/page.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "utils/stripe/client.js", "app/api/generate/route.jsx", "app/api/generate/route.jsx", "app/generate/page.js", "app/api/generate/suggestion/route.js"],
   "exclude": ["node_modules"]
 }

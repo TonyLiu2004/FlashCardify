@@ -98,7 +98,7 @@ export default function UploadPage() {
                 newPreviews.push(previewUrl);
                 setFilePreviews([...newPreviews]);
             };
-
+            console.log(file);
             if (file.type === 'application/pdf' || file.type.startsWith('image/') || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
                 reader.readAsDataURL(file);
             } else if (file.type === 'text/plain') {
@@ -406,7 +406,7 @@ export default function UploadPage() {
                     >
                         <input {...getInputProps()} />
                         <p className="text-gray-500 text-center">Drag & drop some files here, or click to select files</p>
-                        <p className="text-sm text-center text-gray-400">Supported formats: .docx, .pdf, .txt, images. Max file size: 10MB</p>
+                        <p className="text-sm text-center text-gray-400">Supported formats: .docx, .pdf, .txt. Max file size: 10MB</p>
                     </div>
 
                     {uploadedFiles.length > 0 && (
