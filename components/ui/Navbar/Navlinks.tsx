@@ -20,7 +20,7 @@ export default function Navlinks({ user }: NavlinksProps) {
     <div className="flex items-center justify-between py-2 px-4 h-20" style={{ width: "90vw" }}>
       <div className="flex items-center">
         <Link href="/" className={s.logo} aria-label="Logo">
-          <img src="/new_logo.png" className="h-14 w-auto" alt="FlashCardify Logo" />
+          <img src="/alt_logo.png" className="h-14 w-auto" alt="FlashCardify Logo" />
         </Link>
         <nav className="ml-6 space-x-4 lg:block" style={{ fontSize: "17px" }}>
           {user && (

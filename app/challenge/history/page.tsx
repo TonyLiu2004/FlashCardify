@@ -67,7 +67,7 @@ export default function ChallengeHistory() {
                             <p className="mb-1">Incorrect Answers: {history.incorrect}</p>
                             <p className="mb-1">Time Taken: {history.time_taken} seconds</p>
                             {history.ai_suggestion && (
-                                <p className="mb-1">AI Suggestion: {history.ai_suggestion}</p>
+                                <p className="mb-1">Feedback: {history.ai_suggestion}</p>
                             )}
                             <p className="text-sm text-gray-400">
                                 Completed on: {new Date(history.created_at || '').toLocaleString()}
