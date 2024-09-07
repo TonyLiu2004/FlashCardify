@@ -63,10 +63,13 @@ export default function PricingPage() {
       const cardWidth = 80;
       const cardHeight = 120;
       const maxAttempts = 100;
-      const maxWidth = (window.innerWidth - cardWidth) / 2.2;
+      const maxWidth = window.innerWidth - cardWidth;
       const maxHeight = window.innerHeight - cardHeight;
 
-      for (let i = 0; i < 12; i++) {
+      const screenArea = window.innerWidth * window.innerHeight;
+      const cardArea = cardWidth * cardHeight;
+      const numberOfCards = Math.max(Math.floor(screenArea / cardArea / 10), 1);
+      for (let i = 0; i < numberOfCards; i++) {
         let position: FlashcardPosition;
         let attempts = 0;
         do {
@@ -74,14 +77,12 @@ export default function PricingPage() {
             x: Math.random() * maxWidth,
             y: Math.random() * maxHeight,
           };
-          if (i >= 6) {
-            position.x += window.innerWidth / 2;
-          }
           attempts++;
         } while (
           attempts < maxAttempts &&
           cards.some((card) => isOverlapping(card, position, cardWidth, cardHeight))
         );
+        console.log(position)
         cards.push(position);
       }
       setBackgroundFlashcards(cards);
